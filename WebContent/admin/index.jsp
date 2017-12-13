@@ -141,7 +141,7 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像"><img
+				<a class="img" title="我的头像"><img class="layui-anim" data-anim="layui-anim-rotate layui-anim-loop"
 					src="<s:url value='/admin/images/face.jpg' />"></a>
 				<p>
 					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录
