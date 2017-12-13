@@ -1,0 +1,9 @@
+/.idea/
+/.settings/
+/build/
+/target/
+/WebContent/WEB-INF/classes/
+.DS_Store
+.classpath
+.project
+*.iml
