@@ -60,7 +60,7 @@
 	 
 	<div class="layui-form news_list">
 	  	<ul id="demo"></ul>
-	  	<div class="add" style="display:none;">
+	  	<div class="add">
 		<form class="layui-form" url="<s:url value='/dictionary/save' />">
 		<input type="hidden" name="id" class="dictionaryId">
 		<input type="hidden" name="dictionary.level" class="dictionaryLevel">

@@ -24,7 +24,20 @@ $.get("/shangcheng/dictionary/listForTree", function(data){
 	}
 	parentNode.append(html);
     treeData = data;
-        	
+    for(var i = 0;i<data.length;i++){
+		if(data[i].parentId == "0"){
+			console.log(data[i]);
+			data[i].spread = "true";
+			$(".parentNode").val("无");
+			$(".dictionaryName").val(data[i].name);
+			$(".dictionaryCode").val(data[i].code);
+			var level = data[i].level;
+			$(".dictionaryLevel").val(level);
+			$(".parentId").val(0);
+			$(".dictionaryId").val(data[i].id);
+			$(".layui-btn.layui-btn-xs").hide();
+		}
+	}
 	})
 var parentNode;
 $.get("/shangcheng/dictionary/findAll", function(data){
