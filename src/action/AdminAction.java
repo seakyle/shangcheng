@@ -48,7 +48,7 @@ public class AdminAction extends ActionSupport implements Preparable{
 	private ActionContext actionContext = ActionContext.getContext();  
 	
     private Map<String,Object> session = actionContext.getSession(); 
-	
+
 	
 	@Autowired
 	private IStudentInfoService studentInfoService;
@@ -97,7 +97,6 @@ public class AdminAction extends ActionSupport implements Preparable{
 			if(admin != null) {
 				Admin adminResult =  adminService.checkLogin(admin);
 				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), admin.getPassword());
-				 
 				if(adminResult == null || !code.equals(getRand())) {
 					if(studentInfo != null && code.equals(getRand())) {
 						name = studentInfo.getStu_name();
@@ -218,5 +217,6 @@ public class AdminAction extends ActionSupport implements Preparable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	
 }

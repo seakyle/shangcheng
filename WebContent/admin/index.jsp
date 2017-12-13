@@ -120,11 +120,11 @@
 									value="name" /></cite>
 					</a>
 						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;"
-									data-url="<s:url value='/Admin/edit' />?id=<s:property value='id' />"><i
-									class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>
+							
+								<dd class="info">
+								
 							</dd>
+							
 							<dd>
 								<a href="javascript:;"
 									data-url="<s:url value='/admin/page/user/changePwd.jsp' />"><i
@@ -216,6 +216,13 @@
 		if ($(".type").val().trim() == 'student') {
 			$(".logo").html('学生选课系统');
 		}
+		html="";
+		if("<s:property value='type'/>" == "student"){
+			html='<a href="javascript:;" data-url="<s:url value='/studentInfo/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
+		}else{
+			html='<a href="javascript:;" data-url="<s:url value='/Admin/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
+		}
+		$(".info").append(html)
 	</script>
 	<script type="text/javascript"
 		src="<s:url value='/admin/js/leftNav.js' />"></script>
