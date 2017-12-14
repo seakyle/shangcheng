@@ -60,7 +60,7 @@ public class NavsService implements INavsService{
 	@Override
 	public List<Navs> findByType(String type) {
 		String sql="select * from system_navs where type like ? order by parentId";
-		Query query = getSession().createSQLQuery(sql).addEntity(Navs.class).setString(0, "%"+type+"%");
+		Query query = getSession().createSQLQuery(sql).addEntity(Navs.class).setString(0,type);
 		return query.list();
 	}
 

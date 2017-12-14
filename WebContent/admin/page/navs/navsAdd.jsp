@@ -155,8 +155,23 @@ $.ajax({
 			data:{"parentId":data[0].id},
 			success:function(data){
 				var html="";
+				var type=$(".type").val().split(",");
 				for(var i = 0;i<data.length;i++){
-					html+='<div class="layui-input-inline" style="width:auto;"><input type="checkbox" name="nav.type" title="'+data[i].name+'" value="'+data[i].code+'"></div>';
+					var checked="";
+					for(var k = 0;k<type.length;k++){
+						if(type[k].trim() == data[i].code){
+							checked="true";
+							break;
+						}else{
+							checked="false";
+						}
+					}
+					if(checked == "true"){
+						html+='<div class="layui-input-inline" style="width:auto;"><input type="checkbox" name="nav.type" title="'+data[i].name+'" value="'+data[i].code+'" checked></div>';
+					}else{
+						html+='<div class="layui-input-inline" style="width:auto;"><input type="checkbox" name="nav.type" title="'+data[i].name+'" value="'+data[i].code+'"></div>';
+					}
+					
 				}
 				$(".role").append(html);
 			}
