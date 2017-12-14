@@ -19,9 +19,7 @@ import service.INavsService;
 
 
 
-//直接在类名称的上端写入即可，value中指定要引入的拦截器的名称即可
-@InterceptorRef(value="paramsPrepareParamsStack")
-@ParentPackage("json-default")  
+@ParentPackage("default") 
 @Namespace("/Navs")
 public class NavsAction extends ActionSupport implements Preparable{
 

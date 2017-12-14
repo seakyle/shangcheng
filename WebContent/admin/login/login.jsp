@@ -52,7 +52,7 @@
 					
 
 					<!-- Start Sign In Form -->
-					<form action="<s:url value='/Admin/checkLogin' />" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" method="post">
+					<form action="<s:url value='/checkLogin/checkLogin' />" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" method="post">
 						<h2>登录</h2>
 						<div class="form-group">
 							<label for="username" class="sr-only">用户名</label>

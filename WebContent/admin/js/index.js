@@ -69,7 +69,7 @@ layui.config({
 
 	// 添加新窗口
 	$(".layui-nav .layui-nav-item a").on("click",function(){
-		if($(this)["0"].innerText != "锁屏"){
+		if($(this)["0"].innerText != "锁屏"&&$(this)["0"].innerText != "退出"){
 			addTab($(this));
 			$(this).parent("li").siblings().removeClass("layui-nav-itemed");
 		}

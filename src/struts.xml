@@ -11,14 +11,25 @@
     <!-- 指定每次请求到达，重新加载资源文件 -->    
     <constant name="struts.i18n.reload" value="false" />    
     <!-- 指定每次配置文件更改后，自动重新加载 -->    
-    <constant name="struts.configuration.xml.reload" value="false" />    
-  <package name="default" namespace="/" extends="struts-default"> 
-  	<interceptors>
-         <interceptor-stack name="sessionStack">
-				<interceptor-ref name="defaultStack" />
-        </interceptor-stack>
-    </interceptors>
-  </package>
-
-	
+    <constant name="struts.configuration.xml.reload" value="false" /> 
+    
+    <include file="struts.xml"/>
+    
+    <package name="default" namespace="/" extends="json-default">
+    	 <interceptors>
+        	<interceptor name="interceptor" class="interceptor.Interceptor" />
+        	<interceptor-stack name="sessionCheckStack">
+        		<interceptor-ref name="interceptor" />
+        		<interceptor-ref name="defaultStack" />
+                <interceptor-ref name="paramsPrepareParamsStack" />
+        	</interceptor-stack> 
+        </interceptors>
+       
+      <default-interceptor-ref name="sessionCheckStack"></default-interceptor-ref> 
+      <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/admin/login/login.jsp</result>  
+        </global-results> 
+       
+    </package>
 </struts>    

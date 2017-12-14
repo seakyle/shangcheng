@@ -18,8 +18,8 @@ import entity.Admin;
 import entity.StudentInfo;
 import service.IAdminService;
 import service.IStudentInfoService;
-@InterceptorRef(value="paramsPrepareParamsStack")
-@ParentPackage("json-default")
+
+@ParentPackage("default")
 @Namespace("/Admin")
 public class AdminAction extends ActionSupport implements Preparable{
 	
@@ -80,50 +80,7 @@ public class AdminAction extends ActionSupport implements Preparable{
 	public String edit() {
 		return "success";
 	}
-	//获取页面生成的验证码
-	private String getRand() {
-		// TODO Auto-generated method stub
-		ActionContext actionContext = ActionContext.getContext();
-		Map<String, Object> session = actionContext.getSession();
-		String rand = (String) session.get("rand");
-		return rand;
-	}
-	@Action(value="checkLogin",results = {
-            @Result(name = "success", location = "/admin/index.jsp"),
-            @Result(name = "error", location = "/admin/login/login.jsp"),
-            @Result(name = "input", location = "/admin/login/login.jsp")})
-	public String checkLogin() {
-		try {
-			if(admin != null) {
-				Admin adminResult =  adminService.checkLogin(admin);
-				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), admin.getPassword());
-				if(adminResult == null || !code.equals(getRand())) {
-					if(studentInfo != null && code.equals(getRand())) {
-						name = studentInfo.getStu_name();
-						type = studentInfo.getType();
-						id=Integer.toString(studentInfo.getId());
-						userName = studentInfo.getStu_id();
-				        session.put("studentInfo", studentInfo);
-						return "success";
-					}else {
-						return "error";
-					}
-				}else {
-					name=adminResult.getName();
-					type = adminResult.getType();
-					id=Integer.toString(adminResult.getId());
-					userName = adminResult.getUsername();
-					session.put("admin", adminResult);
-					return "success";
-				}
-			}
-			return "input";
-		} catch (Exception e) {
-			
-			return "input";
-		}
-				
-	}
+	
 	@Action(value="quit",results = { @Result(name = "quit", location = "/admin/login/login.jsp")})
 	public String quit() {
 		session.clear();

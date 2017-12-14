@@ -17,8 +17,7 @@ import com.opensymphony.xwork2.Preparable;
 import entity.Dictionary;
 import service.IDictionaryServcie;
 
-@InterceptorRef(value="paramsPrepareParamsStack")
-@ParentPackage("json-default")  
+@ParentPackage("default") 
 @Namespace("/dictionary")
 public class DictionaryAction extends ActionSupport implements Preparable{
 

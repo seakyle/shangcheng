@@ -1,9 +1,17 @@
 package entity;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 
 @Entity(name="t_course")
 public class Course {
@@ -18,6 +26,9 @@ public class Course {
 	private String course_credits;//课程学分
 	
 	private String course_description;//课程描述
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<StudentInfo> student;
 	
 	public int getId() {
 		return id;
@@ -57,6 +68,14 @@ public class Course {
 
 	public void setCourse_description(String course_description) {
 		this.course_description = course_description;
+	}
+
+	public Set<StudentInfo> getStudent() {
+		return student;
+	}
+
+	public void setStudent(Set<StudentInfo> student) {
+		this.student = student;
 	}
 	
 	

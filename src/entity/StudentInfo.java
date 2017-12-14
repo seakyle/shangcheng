@@ -1,10 +1,14 @@
 package entity;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 /*
  * 学生信息表
  */
@@ -32,6 +36,10 @@ public class StudentInfo {
 	private String password;//密码
 	
 	private String type;//类型
+	
+	@ManyToMany(mappedBy="student",cascade=CascadeType.ALL)
+	
+	private Set<Course> course;
 
 	public int getId() {
 		return id;
