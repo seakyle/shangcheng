@@ -149,6 +149,7 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 		return "success";
 	}
 
+
 	@Action(value="listForSelect",results = { @Result(name = "listForSelect", type="json",params={"root","list"})})
 	public String listForSelect() {
 		list = studentInfoService.findByPId(Integer.parseInt(parentId));
