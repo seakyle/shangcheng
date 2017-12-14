@@ -141,6 +141,13 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 		stu = studentInfoService.findById(Integer.parseInt(id));
 		return "success";
 	}
+	
+	@Action(value="perInfoedit",results = {
+            @Result(name = "success", location = "/admin/page/studentInfo/studentInfo.jsp")})
+	public String perInfoedit() {
+		stu = studentInfoService.findById(Integer.parseInt(id));
+		return "success";
+	}
 
 	@Action(value="listForSelect",results = { @Result(name = "listForSelect", type="json",params={"root","list"})})
 	public String listForSelect() {

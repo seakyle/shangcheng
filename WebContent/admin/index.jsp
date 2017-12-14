@@ -218,7 +218,7 @@
 		}
 		html="";
 		if("<s:property value='type'/>" == "student"){
-			html='<a href="javascript:;" data-url="<s:url value='/studentInfo/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
+			html='<a href="javascript:;" data-url="<s:url value='/studentInfo/perInfoedit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
 		}else{
 			html='<a href="javascript:;" data-url="<s:url value='/Admin/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
 		}
