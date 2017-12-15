@@ -212,10 +212,16 @@ layui.config({
 	      
 		}else{
 			var index = layer.msg('退选中，请稍候',{icon: 16,time:false,shade:0.8});
-	        setTimeout(function(){
-	            layer.close(index);
-				layer.msg("退选成功");
-	        },1000);
+			$.ajax({
+				"url":"/shangcheng/course/withdrawal",
+				"data":{"id":$(this)["0"].attributes[5].nodeValue},
+				"success":function(data){
+					  setTimeout(function(){
+				            layer.close(index);
+							layer.msg("退选成功");
+				        },1000);
+				}
+			})
 		}
 		
 	})
@@ -273,13 +279,25 @@ layui.config({
 			}
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
+					var html="";
+					if(currData[i].student.length ==0 ){
+						html= '<input type="checkbox" name="choose" lay-skin="switch" lay-text="已选|未选" lay-filter="isChoose" valueId="'+currData[i].id+'">';
+					}
+					for(var k = 0;k<currData[i].student.length;k++){
+			    		if(currData[i].student[k].name == $(".name").val()){
+			    			html= '<input type="checkbox" name="choose" lay-skin="switch" lay-text="已选|未选" lay-filter="isChoose" valueId="'+currData[i].id+'" checked>';
+			    			break;
+			    		}else{
+			    			html= '<input type="checkbox" name="choose" lay-skin="switch" lay-text="已选|未选" lay-filter="isChoose" valueId="'+currData[i].id+'">';
+			    		}
+			    	}
 					dataHtml += '<tr>'
 			    	+'<td>'+currData[i].course_id+'</td>'
 			    	+'<td>'+currData[i].course_name+'</td>'
 			    	+'<td>'+currData[i].course_credits+'</td>'
 			    	+'<td>'+currData[i].course_description+'</td>'
 			    	+'<td>'
-					+  '<input type="checkbox" name="choose" lay-skin="switch" lay-text="已选|未选" lay-filter="isChoose" valueId="'+currData[i].id+'">'
+			    	+ html
 			        +'</td>'
 			    	+'</tr>';
 				}

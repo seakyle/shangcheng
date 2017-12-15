@@ -37,7 +37,7 @@ public class StudentInfo {
 	
 	private String type;//类型
 	
-	@ManyToMany(mappedBy="student",cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="student",cascade=CascadeType.PERSIST)
 	
 	private Set<Course> course;
 

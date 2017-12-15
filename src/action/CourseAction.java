@@ -2,6 +2,7 @@ package action;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -85,12 +86,24 @@ public class CourseAction extends ActionSupport implements Preparable{
 	@SuppressWarnings("unchecked")
 	@Action(value="list",results = { @Result(name = "list", type="json",params={"root","courseList"})})
 	public String list() {
+		courseList = new ArrayList<Course>();
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.setIgnoreDefaultExcludes(false); //设置默认忽略 
 		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);//设置循环策略为忽略    解决json最头疼的问题 死循环
 		jsonConfig.setExcludes(new String[] {"course"});//此处是亮点，只要将所需忽略字段加到数组中即可
 		JSONArray json=JSONArray.fromObject(courseService.findAll(),jsonConfig);
-		courseList = (List<Course>) JSONArray.toCollection(json, Course.class);
+		for (int i = 0; i < json.size(); i++) { 
+			JSONObject jsonObject = json.getJSONObject(i);
+			JSONArray student = jsonObject.getJSONArray("student");
+			List<StudentInfo> studentList= (List<StudentInfo>) JSONArray.toCollection(student , StudentInfo.class);
+			Set<StudentInfo> studentSet= new HashSet<StudentInfo>();
+			for(int k = 0;k<studentList.size();k++) {
+				studentSet.add(studentList.get(k));
+			}
+			Course course =  (Course) JSONObject.toBean(jsonObject, Course.class);
+			course.setStudent(studentSet);
+			courseList.add(course);
+		}
 		return "list";
 	}
 	
@@ -120,5 +133,17 @@ public class CourseAction extends ActionSupport implements Preparable{
             @Result(name = "success", location = "/admin/page/course/courseAdd.jsp")})
 	public String edit() {
 		return "success";
+	}
+	@Action(value="withdrawal")
+	public String withdrawal() {
+		Set<StudentInfo> studentSet = course.getStudent();
+		Iterator<StudentInfo> it = studentSet.iterator();
+		while(it.hasNext()) {
+			StudentInfo student = it.next();
+			studentSet.remove(student);
+		}
+		course.setStudent(studentSet);
+		courseService.saveOrUpdate(course);
+		return NONE;
 	}
 }
