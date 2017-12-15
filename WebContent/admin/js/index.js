@@ -72,7 +72,6 @@ layui.config({
 		if($(this)["0"].innerText != "锁屏"&&$(this)["0"].innerText != "退出"){
 			addTab($(this));
 			$(this).parent("li").siblings().removeClass("layui-nav-itemed");
-			console.log($(".layui-tab-item.layui-show")["0"].firstChild)
 			$($(".layui-tab-item.layui-show")["0"].firstChild).attr('src', $($(".layui-tab-item.layui-show")["0"].firstChild).attr('src'));
 		}
 	})
