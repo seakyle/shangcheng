@@ -23,11 +23,7 @@ layui.config({
         
         //添加验证规则
         form.verify({
-            oldPwd : function(value, item){
-                if(value != "123456"){
-                    return "密码错误，请重新输入！";
-                }
-            },
+           
             newPwd : function(value, item){
                 if(value.length < 6){
                     return "密码长度不能小于6位";
@@ -78,12 +74,29 @@ layui.config({
 
         //修改密码
         form.on("submit(changePwd)",function(data){
-        	var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-                layer.msg("密码修改成功！");
-                $(".pwd").val('');
-            },2000);
+        	$.ajax({
+        		"url":"/shangcheng/Admin/changePwd",
+        		"data":{"admin.username":$(".userName").val(),"password":$("#oldPwd").val(),"admin.password":$(".currentPwd").val()},
+        		"success":function(data){
+        			console.log(data);
+        			var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        			if(data.state){
+        				setTimeout(function(){
+                            layer.close(index);
+                            layer.msg(data.msg);
+                            $(".pwd").val('');
+                        },2000);
+        			}else{
+                        setTimeout(function(){
+                            layer.close(index);
+                            layer.msg(data.msg);
+                            $(".pwd").val('');
+                        },2000);
+        			}
+        			
+        		}
+        	});
+        	
         	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         })
         var areaData;

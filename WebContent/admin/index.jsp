@@ -114,7 +114,7 @@
 							class="iconfont icon-loginout"></i> 退出</a></li>
 					<li class="layui-nav-item lockcms" pc><a href="javascript:;"><i
 							class="iconfont icon-lock1"></i><cite>锁屏</cite></a></li>
-					<li class="layui-nav-item" pc><a href="javascript:;"> <img
+					<li class="layui-nav-item" pc><a href="javascript:;" style="pointer-events: none;"> <img
 							src="<s:url value='/admin/images/face.jpg' />"
 							class="layui-circle" width="35" height="35"> <cite><s:property
 									value="name" /></cite>

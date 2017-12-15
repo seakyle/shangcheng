@@ -48,6 +48,8 @@ public class AdminAction extends ActionSupport implements Preparable{
 	private ActionContext actionContext = ActionContext.getContext();  
 	
     private Map<String,Object> session = actionContext.getSession(); 
+    
+    private String password;//密码
 
 	
 	@Autowired
@@ -120,6 +122,43 @@ public class AdminAction extends ActionSupport implements Preparable{
 		}
 		return "lockScreen";
 	}
+	@Action(value="changePwd",results = { 
+			@Result(name = "changePwd", type="json",params={"root","msg"})})
+	public String changePwd() {
+		try {
+			if(admin != null) {
+				Admin adminResult =  adminService.checkLogin(admin);
+				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), admin.getPassword());
+				if(adminResult == null) {
+					if(studentInfo != null) {
+						studentInfo.setPassword(password);
+						studentInfoService.saveOrUpdate(studentInfo);
+						msg.put("state", true);
+						msg.put("msg", "密码修改成功");
+						return "changePwd";
+					}else {
+						msg.put("state", false);
+						msg.put("msg", "旧密码错误");
+						return "changePwd";
+					}
+				}else {
+					adminResult.setPassword(password);
+					adminService.saveOrUpdate(adminResult);
+					msg.put("state", true);
+					msg.put("msg", "密码修改成功");
+					return "changePwd";
+				}
+			}else {
+				msg.put("state", false);
+				msg.put("msg", "旧密码错误");
+				return "changePwd";
+			}
+		} catch (Exception e) {
+			msg.put("state", false);
+			msg.put("msg", "密码修改失败");
+			return "lockScreen";
+		}
+	}
 	public IAdminService getAdminService() {
 		return adminService;
 	}
@@ -173,6 +212,12 @@ public class AdminAction extends ActionSupport implements Preparable{
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
