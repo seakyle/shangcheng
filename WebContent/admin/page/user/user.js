@@ -23,7 +23,11 @@ layui.config({
         
         //添加验证规则
         form.verify({
-           
+        	oldPwd : function(value, item){
+               if(value==$("#oldPwd").val()){
+            	   return "新密码与旧密码不能相同";
+               }
+            },
             newPwd : function(value, item){
                 if(value.length < 6){
                     return "密码长度不能小于6位";
@@ -85,13 +89,13 @@ layui.config({
                             layer.close(index);
                             layer.msg(data.msg);
                             $(".pwd").val('');
-                        },2000);
+                        },1000);
         			}else{
                         setTimeout(function(){
                             layer.close(index);
-                            layer.msg(data.msg);
+                            layer.msg(data.msg,{icon:5,shift:6});
                             $(".pwd").val('');
-                        },2000);
+                        },1000);
         			}
         			
         		}
