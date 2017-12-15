@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,8 +38,7 @@ public class StudentInfo {
 	
 	private String type;//类型
 	
-	@ManyToMany(mappedBy="student",cascade=CascadeType.PERSIST)
-	
+	@ManyToMany(mappedBy="student",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private Set<Course> course;
 
 	public int getId() {
@@ -111,6 +111,14 @@ public class StudentInfo {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Set<Course> getCourse() {
+		return course;
+	}
+
+	public void setCourse(Set<Course> course) {
+		this.course = course;
 	}
 	
 	

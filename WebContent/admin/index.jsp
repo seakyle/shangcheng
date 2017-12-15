@@ -145,6 +145,7 @@
 					src="<s:url value='/admin/images/face.jpg' />"></a>
 				<p>
 					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录
+					<input type="hidden" class="id" value="<s:property value="id" />" />
 				</p>
 				<input type="hidden" class="type"
 					value="<s:property value='type' />" /> <input type="hidden"
