@@ -69,7 +69,7 @@ layui.config({
 
 	// 添加新窗口
 	$(".layui-nav .layui-nav-item a").on("click",function(){
-		if($(this)["0"].innerText != "锁屏"&&$(this)["0"].innerText != "退出"){
+		if($(this)["0"].innerText != "锁屏"&&$(this)["0"].innerText != "退出"&&$(this)["0"].innerText != "系统公告"){
 			addTab($(this));
 			$(this).parent("li").siblings().removeClass("layui-nav-itemed");
 			$($(".layui-tab-item.layui-show")["0"].firstChild).attr('src', $($(".layui-tab-item.layui-show")["0"].firstChild).attr('src'));
