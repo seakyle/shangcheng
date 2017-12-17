@@ -89,9 +89,10 @@
 			</div>
 		</div>
 		<div class="user_right">
-			<input type="file" name="dddd" class="layui-upload-file" lay-title="我要更换头像">
+			<input type="file" name="file" class="layui-upload-file" lay-title="我要更换头像">
 			<p></p>
 			<img src="" class="layui-circle" id="userFace">
+			<input type="hidden" name="admin.image" value="<s:property value='admin.image' />" id="image">
 		</div>
 		<div class="layui-form-item" style="margin-left: 5%;">
 		    <div class="layui-input-block">

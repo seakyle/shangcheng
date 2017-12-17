@@ -1,15 +1,22 @@
 package action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.mchange.io.FileUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
@@ -51,10 +58,16 @@ public class AdminAction extends ActionSupport implements Preparable{
     
     private String password;//密码
 
+    private HttpServletRequest request= ServletActionContext.getRequest();
 	
 	@Autowired
 	private IStudentInfoService studentInfoService;
 	
+	private String image;
+	
+	private File file;
+	
+	private String fileFileName;
 	@Override
 	public void prepare() throws Exception {
 		if(id == null ||id.equals("")) {
@@ -63,16 +76,31 @@ public class AdminAction extends ActionSupport implements Preparable{
 			admin = adminService.findById(Integer.parseInt(id));
 		}
 	}
+	
+	//文件上传
+	@Action(value="upload",results={@Result(name = "upload", type="json",params={"root","image"})})
+	public String upload() throws IOException {
+		String path = request.getSession().getServletContext().getRealPath("/upload");
+		File uploadfile = new File(path);
+		if(!file.exists())file.mkdirs();
+		String suffixName = fileFileName.substring(fileFileName.lastIndexOf("."));
+		String hash = Integer.toHexString(new Random().nextInt());//自定义随机数（字母+数字）作为文件名
+		String fileName = hash + suffixName;
+		org.apache.commons.io.FileUtils.copyFile(file, new File(uploadfile,fileName));
+		image = fileName;
+		return "upload";
+	}
+	
 	@Action(value="save",results = {
             @Result(name = "success", type="json",params={"root","msg"})})
 	public String save() {
 		try {
 			adminService.saveOrUpdate(admin);
 			msg.put("state", true);
-			msg.put("message", "保存成功");
+			msg.put("msg", "保存成功");
 		} catch (Exception e) {
 			msg.put("state", false);
-			msg.put("message", "保存失败");
+			msg.put("msg", "保存失败");
 			e.printStackTrace();
 		}
 		return "success";
@@ -219,6 +247,38 @@ public class AdminAction extends ActionSupport implements Preparable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
 	
 }

@@ -115,7 +115,7 @@
 					<li class="layui-nav-item lockcms" pc><a href="javascript:;"><i
 							class="iconfont icon-lock1"></i><cite>锁屏</cite></a></li>
 					<li class="layui-nav-item" pc><a href="javascript:;" style="pointer-events: none;"> <img
-							src="<s:url value='/admin/images/face.jpg' />"
+							src="<s:url value='/upload/%{image}' />"
 							class="layui-circle" width="35" height="35"> <cite><s:property
 									value="name" /></cite>
 					</a>
@@ -142,7 +142,7 @@
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
 				<a class="img" title="我的头像"><img class="layui-anim" data-anim="layui-anim-rotate layui-anim-loop"
-					src="<s:url value='/admin/images/face.jpg' />"></a>
+					src="<s:url value='/upload/%{image}' />"></a>
 				<p>
 					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录
 					<input type="hidden" class="id" value="<s:property value="id" />" />
@@ -173,7 +173,7 @@
 	<!-- 锁屏 -->
 	<div class="admin-header-lock" id="lock-box" style="display: none;">
 		<div class="admin-header-lock-img">
-			<img src="<s:url value='/admin/images/face.jpg' />" />
+			<img src="<s:url value='/upload/%{image}' />" />
 		</div>
 		<div class="admin-header-lock-name" id="lockUserName">
 			<s:property value="name" />

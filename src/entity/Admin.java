@@ -35,6 +35,8 @@ public class Admin {
 	
 	private String address;//家庭地址
 	
+	private String image;//头像
+	
 	public int getId() {
 		return id;
 	}
@@ -129,6 +131,14 @@ public class Admin {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

@@ -41,6 +41,8 @@ public class CheckLoginAction {
 	
     private Map<String,Object> session = actionContext.getSession(); 
     
+    private String image;
+    
     @Autowired
 	private IStudentInfoService studentInfoService;
 
@@ -70,6 +72,7 @@ public class CheckLoginAction {
 					type = adminResult.getType();
 					id=Integer.toString(adminResult.getId());
 					userName = adminResult.getUsername();
+					image = adminResult.getImage();
 					session.put("admin", adminResult);
 					return "success";
 				}
@@ -161,6 +164,14 @@ public class CheckLoginAction {
 
 		public void setStudentInfoService(IStudentInfoService studentInfoService) {
 			this.studentInfoService = studentInfoService;
+		}
+
+		public String getImage() {
+			return image;
+		}
+
+		public void setImage(String image) {
+			this.image = image;
 		}
 		
 	

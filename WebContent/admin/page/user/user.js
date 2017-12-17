@@ -11,15 +11,15 @@ layui.config({
 		$form = $('form');
 		laydate = layui.laydate;
         layui.upload({
-        	url : "../../json/userface.json",
+        	url : "/shangcheng/Admin/upload",
         	success: function(res){
-        		var num = parseInt(4*Math.random());  //生成0-4的随机数
-        		//随机显示一个头像信息
-		    	userFace.src = res.data[num].src;
-		    	window.sessionStorage.setItem('userFace',res.data[num].src);
+        		$("#userFace").attr("src","/shangcheng/upload/"+res);
+        		$("#image").val(res);
 		    }
         });
-        
+        if($("#image").val() != ""){
+        	$("#userFace").attr("src","/shangcheng/upload/"+$("#image").val());
+        }
         
         //添加验证规则
         form.verify({
@@ -41,11 +41,8 @@ layui.config({
         })
 
         //判断是否修改过头像，如果修改过则显示修改后的头像，否则显示默认头像
-        if(window.sessionStorage.getItem('userFace')){
-        	$("#userFace").attr("src",window.sessionStorage.getItem('userFace'));
-        }else{
-        	$("#userFace").attr("src","../../images/face.jpg");
-        }
+      
+      
 
         //提交个人资料
         form.on("submit(changeUser)",function(data){
