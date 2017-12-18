@@ -90,13 +90,13 @@
 							"geolocation" : "enabled",
 							"language" : "zh-chs",
 							"unit" : "c",
-							"theme" : "chameleon",
+							"theme" : "black",
 							"container" : "tp-weather-widget",
 							"bubble" : "enabled",
 							"alarmType" : "badge",
 							"color" : "#FFFFFF",
 							"uid" : "U3C5F3DB0C",
-							"hash" : "03ca8525f736a00b972358bf7e8f569b"
+							"hash" : "ae8d5d5e17a4172b65c42b81d9647e58"
 						});
 						tpwidget("show");
 					</script>
@@ -114,17 +114,16 @@
 							class="iconfont icon-loginout"></i> 退出</a></li>
 					<li class="layui-nav-item lockcms" pc><a href="javascript:;"><i
 							class="iconfont icon-lock1"></i><cite>锁屏</cite></a></li>
-					<li class="layui-nav-item" pc><a href="javascript:;" style="pointer-events: none;"> <img
+					<li class="layui-nav-item" pc><a href="javascript:;"
+						style="pointer-events: none;"> <img
 							src="<s:url value='/upload/%{image}' />"
 							class="layui-circle faceImage" width="35" height="35"> <cite><s:property
 									value="name" /></cite>
 					</a>
 						<dl class="layui-nav-child">
-							
-								<dd class="info">
-								
-							</dd>
-							
+
+							<dd class="info"></dd>
+
 							<dd>
 								<a href="javascript:;"
 									data-url="<s:url value='/admin/page/user/changePwd.jsp' />"><i
@@ -141,11 +140,12 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像"><img class="layui-anim faceImage" data-anim="layui-anim-rotate layui-anim-loop"
+				<a class="img" title="我的头像"><img class="layui-anim faceImage"
+					data-anim="layui-anim-rotate layui-anim-loop"
 					src="<s:url value='/upload/%{image}' />"></a>
 				<p>
-					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录
-					<input type="hidden" class="id" value="<s:property value="id" />" />
+					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录 <input
+						type="hidden" class="id" value="<s:property value="id" />" />
 				</p>
 				<input type="hidden" class="type"
 					value="<s:property value='type' />" /> <input type="hidden"
@@ -217,11 +217,11 @@
 		if ($(".type").val().trim() == 'student') {
 			$(".logo").html('学生选课系统');
 		}
-		html="";
-		if("<s:property value='type'/>" == "student"){
-			html='<a href="javascript:;" data-url="<s:url value='/studentInfo/perInfoedit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
-		}else{
-			html='<a href="javascript:;" data-url="<s:url value='/Admin/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
+		html = "";
+		if ("<s:property value='type'/>" == "student") {
+			html = '<a href="javascript:;" data-url="<s:url value='/studentInfo/perInfoedit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
+		} else {
+			html = '<a href="javascript:;" data-url="<s:url value='/Admin/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
 		}
 		$(".info").append(html)
 	</script>
