@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="<s:url value='/admin/layui/css/layui.css' />" media="all" />
 	<link rel="stylesheet" href="<s:url value='/admin/css/user.css' />" media="all" />
 	<style type="text/css">
-		.layui-upload-button{
-			left: 24px;
+		.layui-form-item .layui-input-inline{
+			width: 149px;
 		}
 	</style>
 </head>
