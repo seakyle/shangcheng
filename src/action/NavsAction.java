@@ -43,6 +43,8 @@ public class NavsAction extends ActionSupport implements Preparable{
 	
 	private String type;//登录用户类型
 	
+	private String ids;//批量删除
+	
 	@Action(value="findAll", results = { @Result(name = "navs", type="json",params={"root","result"})})
 	public String findAll() {
 		navs = navsService.findByType(type);
@@ -88,9 +90,12 @@ public class NavsAction extends ActionSupport implements Preparable{
 	@Action(value="delete")
 	public String delete() {
 		try {
-			if(id != null) {
-				Navs navsDelete = navsService.findById(Integer.parseInt(id));
-				navsService.delete(navsDelete);
+			if(ids != null) {
+				String[] id = ids.split(",");
+				for(int i = 0;i<id.length;i++) {
+					Navs navsDelete = navsService.findById(Integer.parseInt(id[i]));
+					navsService.delete(navsDelete);
+				}
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -145,6 +150,14 @@ public class NavsAction extends ActionSupport implements Preparable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 	@Override
 	public void prepare() throws Exception {

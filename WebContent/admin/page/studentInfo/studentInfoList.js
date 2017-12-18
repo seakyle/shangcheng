@@ -154,14 +154,23 @@ layui.config({
 				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
 	            setTimeout(function(){
 	            	//删除数据
-	            	for(var j=0;j<$checked.length;j++){
-	            		for(var i=0;i<newsData.length;i++){
-							if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-								newsData.splice(i,1);
-								newsList(newsData);
-							}
-						}
+	            	var ids
+	            	for(var i = 0;i<$checked.length;i++){
+	            		ids = $($checked[i]).attr("data-id")+",";
 	            	}
+	            	$.ajax({
+	    				"url":"/shangcheng/studentInfo/delete",
+	    				"data":{"ids":ids.substring(0,ids.length-1)},
+	    				"success":function(data){
+	    					layer.msg("删除成功");
+	    					var newsData = '';
+	    					$.get("/shangcheng/studentInfo/list", function(data){
+	    				        	newsData = data;
+	    				        	newsList(newsData);
+	    							newsList();
+	    					})
+	    				}
+	    			})
 	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
 	            	form.render();
 	                layer.close(index);
@@ -247,7 +256,7 @@ layui.config({
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
 				"url":"/shangcheng/studentInfo/delete",
-				"data":{"id":_this.attr("data-id")},
+				"data":{"ids":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
 					var newsData = '';
@@ -274,7 +283,7 @@ layui.config({
 			if(currData.length != 0){
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
-			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>'
+			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose" data-id="'+data[i].id+'"></td>'
 			    	+'<td>'+currData[i].stu_id+'</td>'
 			    	+'<td>'+currData[i].stu_name+'</td>'
 			    	+'<td>'+currData[i].sex+'</td>'

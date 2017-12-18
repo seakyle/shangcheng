@@ -41,6 +41,8 @@ public class CourseAction extends ActionSupport implements Preparable{
 	private Course course;
 	
 	private String id;
+	
+	private String ids;//批量删除
 
 	public ICourseService getCourseService() {
 		return courseService;
@@ -73,6 +75,14 @@ public class CourseAction extends ActionSupport implements Preparable{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 	@Override
@@ -122,7 +132,13 @@ public class CourseAction extends ActionSupport implements Preparable{
 	@Action(value="delete")
 	public String delete() {
 		try {
-			courseService.delete(course);
+			if(ids != null) {
+				String[] id = ids.split(",");
+				for(int i = 0;i<id.length;i++) {
+					course = courseService.findById(Integer.parseInt(id[i]));
+					courseService.delete(course);
+				}
+			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

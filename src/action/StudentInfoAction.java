@@ -53,6 +53,9 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 	private String name;
 	
 	private Set<Course> course;
+	
+
+	private String ids;//批量删除
 
 	
 	public String getName() {
@@ -119,6 +122,14 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 		this.course = course;
 	}
 
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
 	@Action(value="list",results = { @Result(name = "list", type="json",params={"root","stuInfo"})})
 	public String list() {
 		stuInfo = new ArrayList<StudentInfo>();
@@ -152,9 +163,12 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 	@Action(value="delete")
 	public String delete() {
 		try {
-			if(id != null) {
-				StudentInfo stuDelete = studentInfoService.findById(Integer.parseInt(id));
-				studentInfoService.delete(stuDelete);
+			if(ids != null) {
+				String[] id = ids.split(",");
+				for(int i = 0;i<id.length;i++) {
+					StudentInfo stuDelete = studentInfoService.findById(Integer.parseInt(id[i]));
+					studentInfoService.delete(stuDelete);
+				}
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
