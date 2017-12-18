@@ -61,7 +61,7 @@ layui.config({
         	                		layer.msg(data.msg);
         	                		var faceImage = $('.faceImage', window.parent.document);
         	                		for(var i = 0;i<faceImage.length;i++){
-        	                			faceImage[i].attr("src",$("#image").attr("src"));
+        	                			$(faceImage[i]).attr("src",$("#userFace").attr("src"));
         	                		}
         	                	}else{
         	                		layer.msg(data.msg);
