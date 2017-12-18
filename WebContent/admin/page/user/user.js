@@ -11,14 +11,16 @@ layui.config({
 		$form = $('form');
 		laydate = layui.laydate;
         layui.upload({
-        	url : "/shangcheng/Admin/upload",
+        	url : $("#userFace").attr("url"),
         	success: function(res){
-        		$("#userFace").attr("src","/shangcheng/upload/"+res);
+        		$("#userFace").attr("src",$("#userFace").attr("imageSrc")+res);
         		$("#image").val(res);
 		    }
         });
         if($("#image").val() != ""){
-        	$("#userFace").attr("src","/shangcheng/upload/"+$("#image").val());
+        	$("#userFace").attr("src",$("#userFace").attr("imageSrc")+$("#image").val());
+        }else{
+        	$("#userFace").attr("src",$("#userFace").attr("imageSrc")+"face.jpg");
         }
         
         //添加验证规则
@@ -39,9 +41,6 @@ layui.config({
                 }
             }
         })
-
-        //判断是否修改过头像，如果修改过则显示修改后的头像，否则显示默认头像
-      
       
 
         //提交个人资料
@@ -60,6 +59,10 @@ layui.config({
         	                success: function(data) {  
         	                	if(data.state){
         	                		layer.msg(data.msg);
+        	                		var faceImage = $('.faceImage', window.parent.document);
+        	                		for(var i = 0;i<faceImage.length;i++){
+        	                			faceImage[i].attr("src",$("#image").attr("src"));
+        	                		}
         	                	}else{
         	                		layer.msg(data.msg);
         	                	}
@@ -249,38 +252,6 @@ layui.config({
  	    });
  	}
  	
-// 	//上传图片
-// 	layui.use('upload', function(){
-// 		  var $ = layui.jquery
-// 		  ,upload = layui.upload;
-// 		  
-// 		  //普通图片上传
-// 		  var uploadInst = upload.render({
-// 		    elem: '#test1'
-// 		    ,url: '/SSM_Book/upload'
-// 		    ,before: function(obj){
-// 		      //预读本地文件示例，不支持ie8
-// 		      obj.preview(function(index, file, result){
-// 		        $('#demo1').attr('src', result); //图片链接（base64）
-// 		      });
-// 		    }
-// 		    ,done: function(res){
-// 		      //如果上传失败
-// 		      if(res.code > 0){
-// 		        return layer.msg('上传失败');
-// 		      }
-// 		      //上传成功
-// 		    }
-// 		    ,error: function(){
-// 		      //演示失败状态，并实现重传
-// 		      var demoText = $('#demoText');
-// 		      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-// 		      demoText.find('.demo-reload').on('click', function(){
-// 		        uploadInst.upload();
-// 		      });
-// 		    }
-// 		  });
-// 	});
 
 })
 

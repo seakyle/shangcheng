@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -16,7 +17,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mchange.io.FileUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
@@ -86,7 +86,7 @@ public class AdminAction extends ActionSupport implements Preparable{
 		String suffixName = fileFileName.substring(fileFileName.lastIndexOf("."));
 		String hash = Integer.toHexString(new Random().nextInt());//自定义随机数（字母+数字）作为文件名
 		String fileName = hash + suffixName;
-		org.apache.commons.io.FileUtils.copyFile(file, new File(uploadfile,fileName));
+		FileUtils.copyFile(file, new File(uploadfile,fileName));
 		image = fileName;
 		return "upload";
 	}

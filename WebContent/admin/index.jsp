@@ -116,7 +116,7 @@
 							class="iconfont icon-lock1"></i><cite>锁屏</cite></a></li>
 					<li class="layui-nav-item" pc><a href="javascript:;" style="pointer-events: none;"> <img
 							src="<s:url value='/upload/%{image}' />"
-							class="layui-circle" width="35" height="35"> <cite><s:property
+							class="layui-circle faceImage" width="35" height="35"> <cite><s:property
 									value="name" /></cite>
 					</a>
 						<dl class="layui-nav-child">
@@ -141,7 +141,7 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像"><img class="layui-anim" data-anim="layui-anim-rotate layui-anim-loop"
+				<a class="img" title="我的头像"><img class="layui-anim faceImage" data-anim="layui-anim-rotate layui-anim-loop"
 					src="<s:url value='/upload/%{image}' />"></a>
 				<p>
 					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录

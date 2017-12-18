@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="<s:url value='/admin/layui/css/layui.css' />" media="all" />
 	<link rel="stylesheet" href="<s:url value='/admin/css/user.css' />" media="all" />
 	<style type="text/css">
-		.layui-upload-button{
-			left: 24px;
+		.layui-form-item .layui-input-inline{
+			width: 149px;
 		}
 	</style>
 </head>
@@ -91,7 +91,7 @@
 		<div class="user_right">
 			<input type="file" name="file" class="layui-upload-file" lay-title="我要更换头像">
 			<p></p>
-			<img src="" class="layui-circle" id="userFace">
+			<img src="" class="layui-circle" id="userFace" url="<s:url value='/Admin/upload'/>" imageSrc="<s:url value='/upload/' />">
 			<input type="hidden" name="admin.image" value="<s:property value='admin.image' />" id="image">
 		</div>
 		<div class="layui-form-item" style="margin-left: 5%;">
