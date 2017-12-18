@@ -15,7 +15,8 @@
 	<link rel="stylesheet" href="<s:url value='/admin/css/user.css' />" media="all" />
 	<style type="text/css">
 		.layui-form-item .layui-input-inline{
-			width: 149px;
+			width: 26%;
+			margin-right: 9px;
 		}
 	</style>
 </head>
@@ -69,7 +70,7 @@
 	                    <option value="">请选择市</option>
 	                </select>
 	            </div>
-	            <div class="layui-input-inline">
+	            <div class="layui-input-inline" style="margin-right: 0px;">
 	                <select name="area" lay-filter="area" disabled>
 	                    <option value="">请选择县/区</option>
 	                </select>
