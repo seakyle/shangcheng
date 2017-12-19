@@ -38,6 +38,8 @@ public class StudentInfo {
 	
 	private String type;//类型
 	
+	private String image;//头像
+	
 	@ManyToMany(mappedBy="student",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private Set<Course> course;
 
@@ -119,6 +121,14 @@ public class StudentInfo {
 
 	public void setCourse(Set<Course> course) {
 		this.course = course;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

@@ -62,6 +62,7 @@ public class CheckLoginAction {
 						type = studentInfo.getType();
 						id=Integer.toString(studentInfo.getId());
 						userName = studentInfo.getStu_id();
+						image = studentInfo.getImage();
 				        session.put("studentInfo", studentInfo);
 						return "success";
 					}else {

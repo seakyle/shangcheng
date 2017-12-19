@@ -50,7 +50,7 @@ layui.config({
         			 $.ajax({  
         	                cache: true,  
         	                type: "POST",  
-        	                url:"/shangcheng/Admin/save",  
+        	                url:$("#userInfoform").attr("action"),  
         	                data:$('#userInfoform').serialize(),// 你的formid  
         	                async: false,  
         	                error: function(request) {  

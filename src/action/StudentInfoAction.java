@@ -1,8 +1,10 @@
 package action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -57,6 +59,7 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 
 	private String ids;//批量删除
 
+	private Map<String,Object> msg = new HashMap<String,Object>();//后台返回信息
 	
 	public String getName() {
 		return name;
@@ -130,6 +133,14 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 		this.ids = ids;
 	}
 
+	public Map<String, Object> getMsg() {
+		return msg;
+	}
+
+	public void setMsg(Map<String, Object> msg) {
+		this.msg = msg;
+	}
+
 	@Action(value="list",results = { @Result(name = "list", type="json",params={"root","stuInfo"})})
 	public String list() {
 		stuInfo = new ArrayList<StudentInfo>();
@@ -154,10 +165,19 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 		return "list";
 	}
 
-	@Action(value="save")
+	@Action(value="save",results = { @Result(name = "save", type="json",params={"root","msg"})})
 	public String save() {
-		studentInfoService.saveOrUpdate(stu);
-		return NONE;
+		try {
+			studentInfoService.saveOrUpdate(stu);
+			msg.put("state", true);
+			msg.put("msg", "保存成功");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			msg.put("state", true);
+			msg.put("msg", "保存失败");
+		}
+		return "save";
 	}
 
 	@Action(value="delete")
