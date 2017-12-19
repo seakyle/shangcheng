@@ -154,9 +154,9 @@ layui.config({
 				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
 	            setTimeout(function(){
 	            	//删除数据
-	            	var ids;
+	            	var ids="";
 	            	for(var i = 0;i<$checked.length;i++){
-	            		ids = $($checked[i]).attr("data-id")+",";
+	            		ids += $($checked[i]).attr("data-id")+",";
 	            	}
 	            	$.ajax({
 	    				"url":"/shangcheng/course/delete",
