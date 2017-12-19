@@ -66,4 +66,10 @@ public class AdminService implements IAdminService{
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
+	public List<Admin> findByKeyWords(String keywords) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

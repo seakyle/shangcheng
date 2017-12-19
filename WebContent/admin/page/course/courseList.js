@@ -21,66 +21,20 @@ layui.config({
 		var newArray = [];
 		if($(".search_input").val() != ''){
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	$.ajax({
-					url : "/shangcheng/admin/json/newsList.json",
-					type : "get",
-					dataType : "json",
-					success : function(data){
-						if(window.sessionStorage.getItem("addNews")){
-							var addNews = window.sessionStorage.getItem("addNews");
-							newsData = JSON.parse(addNews).concat(data);
-						}else{
-							newsData = data;
+			 setTimeout(function(){
+	            	$.ajax({
+						url : "/shangcheng/course/findByKeyWords",
+						type : "post",
+						dataType : "json",
+						data:{"keywords":$(".search_input").val()},
+						success : function(data){
+				        	newsList(data);
+							newsList();
 						}
-						for(var i=0;i<newsData.length;i++){
-							var newsStr = newsData[i];
-							var selectStr = $(".search_input").val();
-		            		function changeStr(data){
-		            			var dataStr = '';
-		            			var showNum = data.split(eval("/"+selectStr+"/ig")).length - 1;
-		            			if(showNum > 1){
-									for (var j=0;j<showNum;j++) {
-		            					dataStr += data.split(eval("/"+selectStr+"/ig"))[j] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>";
-		            				}
-		            				dataStr += data.split(eval("/"+selectStr+"/ig"))[showNum];
-		            				return dataStr;
-		            			}else{
-		            				dataStr = data.split(eval("/"+selectStr+"/ig"))[0] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>" + data.split(eval("/"+selectStr+"/ig"))[1];
-		            				return dataStr;
-		            			}
-		            		}
-		            		//文章标题
-		            		if(newsStr.newsName.indexOf(selectStr) > -1){
-			            		newsStr["newsName"] = changeStr(newsStr.newsName);
-		            		}
-		            		//发布人
-		            		if(newsStr.newsAuthor.indexOf(selectStr) > -1){
-			            		newsStr["newsAuthor"] = changeStr(newsStr.newsAuthor);
-		            		}
-		            		//审核状态
-		            		if(newsStr.newsStatus.indexOf(selectStr) > -1){
-			            		newsStr["newsStatus"] = changeStr(newsStr.newsStatus);
-		            		}
-		            		//浏览权限
-		            		if(newsStr.newsLook.indexOf(selectStr) > -1){
-			            		newsStr["newsLook"] = changeStr(newsStr.newsLook);
-		            		}
-		            		//发布时间
-		            		if(newsStr.newsTime.indexOf(selectStr) > -1){
-			            		newsStr["newsTime"] = changeStr(newsStr.newsTime);
-		            		}
-		            		if(newsStr.newsName.indexOf(selectStr)>-1 || newsStr.newsAuthor.indexOf(selectStr)>-1 || newsStr.newsStatus.indexOf(selectStr)>-1 || newsStr.newsLook.indexOf(selectStr)>-1 || newsStr.newsTime.indexOf(selectStr)>-1){
-		            			newArray.push(newsStr);
-		            		}
-		            	}
-		            	newsData = newArray;
-		            	newsList(newsData);
-					}
-				})
-            	
-                layer.close(index);
-            },2000);
+					})
+	            	
+	                layer.close(index);
+	            },2000);
 		}else{
 			layer.msg("请输入需要查询的内容");
 		}

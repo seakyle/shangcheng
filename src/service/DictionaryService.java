@@ -74,4 +74,10 @@ public class DictionaryService implements IDictionaryServcie{
 		return query.list();
 		
 	}
+
+	@Override
+	public List<Dictionary> findByKeyWords(String keywords) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

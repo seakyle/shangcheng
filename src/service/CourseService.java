@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import entity.Course;
+import entity.Navs;
 
 @Transactional 
 @Component(value = "courseService")
@@ -54,6 +56,17 @@ public class CourseService implements ICourseService{
 	@Override
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public List<Course> findByKeyWords(String keywords) {
+		String sql="select * from system_navs where course_name like ? or course_id like ?";
+		if(StringUtils.isEmpty(keywords)||StringUtils.isBlank(keywords)) {
+			keywords = "";
+		}
+		
+		Query query = getSession().createSQLQuery(sql).addEntity(Course.class).setString(0, "%"+keywords+"%").setString(1, "%"+keywords+"%");
+		return query.list();
 	}
 	
 	

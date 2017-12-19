@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -61,6 +62,17 @@ public class NavsService implements INavsService{
 	public List<Navs> findByType(String type) {
 		String sql="select * from system_navs where type like ? order by parentId";
 		Query query = getSession().createSQLQuery(sql).addEntity(Navs.class).setString(0,"%"+type+"%");
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Navs> findByKeyWords(String keywords) {
+		String sql="select * from system_navs where title like ?";
+		if(StringUtils.isEmpty(keywords)||StringUtils.isBlank(keywords)) {
+			keywords = "";
+		}
+		Query query = getSession().createSQLQuery(sql).addEntity(Navs.class).setString(0, "%"+keywords+"%");
 		return query.list();
 	}
 

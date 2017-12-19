@@ -45,6 +45,8 @@ public class NavsAction extends ActionSupport implements Preparable{
 	
 	private String ids;//批量删除
 	
+	private String keywords;//关键字
+	
 	@Action(value="findAll", results = { @Result(name = "navs", type="json",params={"root","result"})})
 	public String findAll() {
 		navs = navsService.findByType(type);
@@ -103,6 +105,11 @@ public class NavsAction extends ActionSupport implements Preparable{
 		}
 		return NONE;
 	}
+	@Action(value="findByKeyWords",results = { @Result(name = "findByKeyWords", type="json",params={"root","navs"})})
+	public String findByKeyWords() {
+		navs = navsService.findByKeyWords(keywords);
+		return "findByKeyWords";
+	}
 	public INavsService getNavsService() {
 		return navsService;
 	}
@@ -158,6 +165,13 @@ public class NavsAction extends ActionSupport implements Preparable{
 	}
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+	
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 	@Override
 	public void prepare() throws Exception {

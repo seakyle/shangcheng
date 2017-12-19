@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import entity.Dictionary;
+import entity.Navs;
 import entity.StudentInfo;
 
 @Transactional 
@@ -73,6 +75,16 @@ public class StudentInfoService implements IStudentInfoService{
 		String sql = "select * from t_stuinfo where stu_id = ? and password = ?";
 		Query query = getSession().createSQLQuery(sql).addEntity(StudentInfo.class).setString(0, stu_id).setString(1, password);
 		return (StudentInfo) query.uniqueResult();
+	}
+
+	@Override
+	public List<StudentInfo> findByKeyWords(String keywords) {
+		String sql="select * from t_stuinfo where stu_name like ? or stu_id like ?";
+		if(StringUtils.isEmpty(keywords)||StringUtils.isBlank(keywords)) {
+			keywords = "";
+		}
+		Query query = getSession().createSQLQuery(sql).addEntity(StudentInfo.class).setString(0, "%"+keywords+"%").setString(1, "%"+keywords+"%");
+		return query.list();
 	}
 
 

@@ -58,6 +58,8 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 	
 
 	private String ids;//批量删除
+	
+	private String keywords;//关键字
 
 	private Map<String,Object> msg = new HashMap<String,Object>();//后台返回信息
 	
@@ -139,6 +141,14 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 
 	public void setMsg(Map<String, Object> msg) {
 		this.msg = msg;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 	@Action(value="list",results = { @Result(name = "list", type="json",params={"root","stuInfo"})})
@@ -235,6 +245,11 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 	public String courseSelected() {
 		course = stu.getCourse();
 		return "courseSelected";
+	}
+	@Action(value="findByKeyWords",results = { @Result(name = "findByKeyWords", type="json",params={"root","stuInfo"})})
+	public String findByKeyWords() {
+		stuInfo = studentInfoService.findByKeyWords(keywords);
+		return "findByKeyWords";
 	}
 	public StudentInfo getStu() {
 		return stu;

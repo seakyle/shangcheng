@@ -42,7 +42,9 @@ public class CourseAction extends ActionSupport implements Preparable{
 	
 	private String id;
 	
-	private String ids;//批量删除
+	private String ids;//批量删除'
+	
+	private String keywords;//关键字
 
 	public ICourseService getCourseService() {
 		return courseService;
@@ -83,6 +85,14 @@ public class CourseAction extends ActionSupport implements Preparable{
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 	@Override
@@ -161,5 +171,10 @@ public class CourseAction extends ActionSupport implements Preparable{
 		course.setStudent(studentSet);
 		courseService.saveOrUpdate(course);
 		return NONE;
+	}
+	@Action(value="findByKeyWords",results = { @Result(name = "findByKeyWords", type="json",params={"root","courseList"})})
+	public String findByKeyWords() {
+		courseList = courseService.findByKeyWords(keywords);
+		return "findByKeyWords";
 	}
 }
