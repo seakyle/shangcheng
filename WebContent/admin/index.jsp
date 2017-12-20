@@ -130,7 +130,7 @@
 									class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a>
 							</dd>
 							<dd>
-								<a href="<s:url value='/Admin/quit' />"><i
+								<a href="<s:url value='/Admin/quit' />" class="loginout"><i
 									class="iconfont icon-loginout"></i><cite>退出</cite></a>
 							</dd>
 						</dl></li>

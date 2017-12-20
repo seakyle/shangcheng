@@ -30,6 +30,8 @@
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  
             <result name="login">/admin/login/login.jsp</result>  
         </global-results> 
-       
+       <action name="unknown"> 
+ 			<result>/admin/page/404.jsp</result> 
+ 		</action> 
     </package>
 </struts>    

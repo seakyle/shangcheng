@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="../../css/user.css" media="all" />
 </head>
 <body class="childrenBody">
-	<form class="layui-form changePwd">
+	<form class="layui-form changePwd" action="<s:url value='/Admin/changePwd' />" href="<s:url value='/Admin/quit' />">
 		<div class="layui-form-item">
 		    <label class="layui-form-label">用户名</label>
 		    <div class="layui-input-block">
