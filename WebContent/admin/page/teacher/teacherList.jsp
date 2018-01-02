@@ -24,25 +24,33 @@
 		    </div>
 		    <a class="layui-btn search_btn">查询</a>
 		</div>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-normal teacherAdd_btn">添加教师</a>
+		</div>
+		<div class="layui-inline">
+			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+		</div>
 		
 	</blockquote>
 	<div class="layui-form news_list">
 	  	<table class="layui-table">
 		    <colgroup>
-				
+				<col width="5%">
+				<col width="9%">
+				<col width="6%">
+				<col width="5%">
+				<col width="9%">
+				<col width="9%">
 				<col width="10%">
-				<col width="15%">
-				<col width="10%">
-				<col width="25%">
-				<col width="15%">
 		    </colgroup>
 		    <thead>
 				<tr>
-					
-					<th>课程编号</th>
-					<th>课程名称</th>
-					<th>课程学分</th>
-					<th>课程描述</th>
+					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+					<th>工号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>所属专业</th>
+					<th>登录密码</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>
@@ -51,6 +59,6 @@
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
-	<script type="text/javascript" src="<s:url value='/admin/page/course/courseChooseList.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/page/teacher/teacherList.js' />"></script>
 </body>
 </html>

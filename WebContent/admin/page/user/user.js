@@ -71,9 +71,8 @@ layui.config({
         	            });
                      layer.close(index);
                      layer.closeAll("iframe");
-                     //element.tabDelete("bodyTab","1513754452478");
-                     //element.tabDelete("bodyTab",$("li.layui-this",window.parent.document).attr("lay-id")).init();
-                     console.log($($("li.layui-this",window.parent.document)["0"].lastChild).click());
+                     
+                     
                  },2000);
         		 
         	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

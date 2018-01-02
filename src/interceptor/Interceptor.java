@@ -15,7 +15,8 @@ public class Interceptor extends AbstractInterceptor{
 	public String intercept(ActionInvocation invoker) throws Exception {
 		Object admin = ActionContext.getContext().getSession().get("admin");  
 		 Object student = ActionContext.getContext().getSession().get("studentInfo");  
-	        if(null == admin && student == null){  
+		 Object teacher = ActionContext.getContext().getSession().get("teacher");
+	        if(null == admin && student == null&&teacher == null){  
 	        	return "login";  // 这里返回用户登录页面视图  
 	        }else {
 	        	return invoker.invoke(); 

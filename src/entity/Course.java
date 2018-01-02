@@ -30,6 +30,9 @@ public class Course {
 	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<StudentInfo> student;
 	
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Teacher> teacher;
+	
 	public int getId() {
 		return id;
 	}
@@ -76,6 +79,14 @@ public class Course {
 
 	public void setStudent(Set<StudentInfo> student) {
 		this.student = student;
+	}
+
+	public Set<Teacher> getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Set<Teacher> teacher) {
+		this.teacher = teacher;
 	}
 	
 	

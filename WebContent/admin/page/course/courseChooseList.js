@@ -21,61 +21,15 @@ layui.config({
 		var newArray = [];
 		if($(".search_input").val() != ''){
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
+			setTimeout(function(){
             	$.ajax({
-					url : "/shangcheng/admin/json/newsList.json",
-					type : "get",
+					url : "/shangcheng/course/findByKeyWords",
+					type : "post",
 					dataType : "json",
+					data:{"keywords":$(".search_input").val()},
 					success : function(data){
-						if(window.sessionStorage.getItem("addNews")){
-							var addNews = window.sessionStorage.getItem("addNews");
-							newsData = JSON.parse(addNews).concat(data);
-						}else{
-							newsData = data;
-						}
-						for(var i=0;i<newsData.length;i++){
-							var newsStr = newsData[i];
-							var selectStr = $(".search_input").val();
-		            		function changeStr(data){
-		            			var dataStr = '';
-		            			var showNum = data.split(eval("/"+selectStr+"/ig")).length - 1;
-		            			if(showNum > 1){
-									for (var j=0;j<showNum;j++) {
-		            					dataStr += data.split(eval("/"+selectStr+"/ig"))[j] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>";
-		            				}
-		            				dataStr += data.split(eval("/"+selectStr+"/ig"))[showNum];
-		            				return dataStr;
-		            			}else{
-		            				dataStr = data.split(eval("/"+selectStr+"/ig"))[0] + "<i style='color:#03c339;font-weight:bold;'>" + selectStr + "</i>" + data.split(eval("/"+selectStr+"/ig"))[1];
-		            				return dataStr;
-		            			}
-		            		}
-		            		//文章标题
-		            		if(newsStr.newsName.indexOf(selectStr) > -1){
-			            		newsStr["newsName"] = changeStr(newsStr.newsName);
-		            		}
-		            		//发布人
-		            		if(newsStr.newsAuthor.indexOf(selectStr) > -1){
-			            		newsStr["newsAuthor"] = changeStr(newsStr.newsAuthor);
-		            		}
-		            		//审核状态
-		            		if(newsStr.newsStatus.indexOf(selectStr) > -1){
-			            		newsStr["newsStatus"] = changeStr(newsStr.newsStatus);
-		            		}
-		            		//浏览权限
-		            		if(newsStr.newsLook.indexOf(selectStr) > -1){
-			            		newsStr["newsLook"] = changeStr(newsStr.newsLook);
-		            		}
-		            		//发布时间
-		            		if(newsStr.newsTime.indexOf(selectStr) > -1){
-			            		newsStr["newsTime"] = changeStr(newsStr.newsTime);
-		            		}
-		            		if(newsStr.newsName.indexOf(selectStr)>-1 || newsStr.newsAuthor.indexOf(selectStr)>-1 || newsStr.newsStatus.indexOf(selectStr)>-1 || newsStr.newsLook.indexOf(selectStr)>-1 || newsStr.newsTime.indexOf(selectStr)>-1){
-		            			newArray.push(newsStr);
-		            		}
-		            	}
-		            	newsData = newArray;
-		            	newsList(newsData);
+			        	newsList(data);
+						newsList();
 					}
 				})
             	
@@ -145,55 +99,9 @@ layui.config({
 		}
 	})
 
-	//批量删除
-	$(".batchDel").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
-				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
-	            setTimeout(function(){
-	            	//删除数据
-	            	for(var j=0;j<$checked.length;j++){
-	            		for(var i=0;i<newsData.length;i++){
-							if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-								newsData.splice(i,1);
-								newsList(newsData);
-							}
-						}
-	            	}
-	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
-	            	form.render();
-	                layer.close(index);
-					layer.msg("删除成功");
-	            },2000);
-	        })
-		}else{
-			layer.msg("请选择需要删除的文章");
-		}
-	})
+	
 
-	//全选
-	form.on('checkbox(allChoose)', function(data){
-		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-		child.each(function(index, item){
-			item.checked = data.elem.checked;
-		});
-		form.render('checkbox');
-	});
-
-	//通过判断文章是否全部选中来确定全选按钮是否选中
-	form.on("checkbox(choose)",function(data){
-		var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"])');
-		var childChecked = $(data.elem).parents('table').find('tbody input[type="checkbox"]:not([name="show"]):checked')
-		if(childChecked.length == child.length){
-			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = true;
-		}else{
-			$(data.elem).parents('table').find('thead input#allChoose').get(0).checked = false;
-		}
-		form.render('checkbox');
-	})
-
+	
 	//是否展示
 	form.on('switch(isChoose)', function(data){
 		if(this.checked){
@@ -284,7 +192,7 @@ layui.config({
 						html= '<input type="checkbox" name="choose" lay-skin="switch" lay-text="已选|未选" lay-filter="isChoose" valueId="'+currData[i].id+'">';
 					}
 					for(var k = 0;k<currData[i].student.length;k++){
-			    		if(currData[i].student[k].name == $(".name").val()){
+			    		if(currData[i].student[k].stu_name == $(".name",window.parent.document).html()){
 			    			html= '<input type="checkbox" name="choose" lay-skin="switch" lay-text="已选|未选" lay-filter="isChoose" valueId="'+currData[i].id+'" checked>';
 			    			break;
 			    		}else{

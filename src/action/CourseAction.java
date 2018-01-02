@@ -23,6 +23,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
 import service.ICourseService;
+import service.IStudentInfoService;
 
 @ParentPackage("default")  
 @Namespace("/course")
@@ -45,6 +46,11 @@ public class CourseAction extends ActionSupport implements Preparable{
 	private String ids;//批量删除'
 	
 	private String keywords;//关键字
+	
+	private String studentId;
+	
+	@Autowired
+	private IStudentInfoService studentInfoService;
 
 	public ICourseService getCourseService() {
 		return courseService;
@@ -95,6 +101,14 @@ public class CourseAction extends ActionSupport implements Preparable{
 		this.keywords = keywords;
 	}
 
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
 	@Override
 	public void prepare() throws Exception {
 		if(id == null ||id.equals("")) {
@@ -132,6 +146,7 @@ public class CourseAction extends ActionSupport implements Preparable{
 		StudentInfo studentInfo = (StudentInfo) ActionContext.getContext().getSession().get("studentInfo");
 		Set<StudentInfo> student = new HashSet<StudentInfo>();
 		if(studentInfo != null) {
+			student=course.getStudent();
 			student.add(studentInfo);
 			course.setStudent(student);
 		}
@@ -162,14 +177,25 @@ public class CourseAction extends ActionSupport implements Preparable{
 	}
 	@Action(value="withdrawal")
 	public String withdrawal() {
-		Set<StudentInfo> studentSet = course.getStudent();
-		Iterator<StudentInfo> it = studentSet.iterator();
-		while(it.hasNext()) {
-			StudentInfo student = it.next();
-			studentSet.remove(student);
+		if(ids != null) {
+			String[] id = ids.split(",");
+			for(int i = 0;i<id.length;i++) {
+				course = courseService.findById(Integer.parseInt(id[i]));
+				StudentInfo studentInfo = studentInfoService.findById(Integer.parseInt(studentId));
+				Set<StudentInfo> studentSet = course.getStudent();
+				Set<StudentInfo> studentSetDelete = new HashSet<StudentInfo>();
+				Iterator<StudentInfo> it = studentSet.iterator();
+				while(it.hasNext()) {
+					StudentInfo student = it.next();
+					if(studentInfo.getId() == student.getId()) {
+						studentSetDelete.add(student);
+					}
+				}
+				studentSet.removeAll(studentSetDelete);
+				course.setStudent(studentSet);
+				courseService.saveOrUpdate(course);
+			}
 		}
-		course.setStudent(studentSet);
-		courseService.saveOrUpdate(course);
 		return NONE;
 	}
 	@Action(value="findByKeyWords",results = { @Result(name = "findByKeyWords", type="json",params={"root","courseList"})})

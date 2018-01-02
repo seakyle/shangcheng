@@ -217,9 +217,14 @@
 		if ($(".type").val().trim() == 'student') {
 			$(".logo").html('学生选课系统');
 		}
+		if ($(".type").val().trim() == 'teacher') {
+			$(".logo").html('课程管理系统');
+		}
 		html = "";
 		if ("<s:property value='type'/>" == "student") {
 			html = '<a href="javascript:;" data-url="<s:url value='/studentInfo/perInfoedit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
+		}else if("<s:property value='type'/>" == "teacher"){
+			html = '<a href="javascript:;" data-url="<s:url value='/teacher/perInfoedit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
 		} else {
 			html = '<a href="javascript:;" data-url="<s:url value='/Admin/edit' />?id=<s:property value='id' />"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>';
 		}

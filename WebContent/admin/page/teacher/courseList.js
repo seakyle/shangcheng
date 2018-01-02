@@ -9,23 +9,14 @@ layui.config({
 		$.ajaxSetup({  
 		    async : false  
 		}); 
-		var id
 	//加载页面数据
-	if($('.id', window.parent.document).val() != undefined){
-		id=$('.id', window.parent.document).val();
-	}else{
-		id = $(".childrenBody")["0"].baseURI.substring($(".childrenBody")["0"].baseURI.indexOf("=")+1,$(".childrenBody")["0"].baseURI.length);
-	}
-	loadData();
-	function loadData(){
 	var newsData = '';
-		$.get("/shangcheng/studentInfo/courseSelected?id="+id, function(data){
+	$.get("/shangcheng/studentInfo/courseSelected?id="+$('.id', window.parent.document).val(), function(data){
         	newsData = data;
         	newsList(newsData);
 			//执行加载数据的方法
 			newsList();
 	})
-	}
 
 	//查询
 	$(".search_btn").click(function(){
@@ -68,10 +59,17 @@ layui.config({
 	            	}
 	            	$.ajax({
 	    				"url":"/shangcheng/course/withdrawal",
-	    				"data":{"ids":ids.substring(0,ids.length-1),"studentId":id},
+	    				"data":{"ids":ids.substring(0,ids.length-1)},
 	    				"success":function(data){
 	    					layer.msg("退选成功");
-	    					loadData();
+	    					var newsData = '';
+	    					var newsData = '';
+	    					$.get("/shangcheng/studentInfo/courseSelected?id="+$('.id', window.parent.document).val(), function(data){
+	    				        	newsData = data;
+	    				        	newsList(newsData);
+	    							//执行加载数据的方法
+	    							newsList();
+	    					})
 	    				}
 	    			})
 	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
@@ -143,14 +141,19 @@ layui.config({
 		var index = layer.msg('退选中，请稍候',{icon: 16,time:false,shade:0.8});
 		$.ajax({
 			"url":"/shangcheng/course/withdrawal",
-			"data":{"ids":$(_this).attr("data-id"),"studentId":id},
+			"data":{"ids":$(_this).attr("data-id")},
 			"success":function(data){
 				  setTimeout(function(){
 			            layer.close(index);
 						layer.msg("退选成功");
 			        },1000);
 			
-				  loadData();
+				  $.get("/shangcheng/studentInfo/courseSelected?id="+$('.id', window.parent.document).val(), function(data){
+			        	newsData = data;
+			        	newsList(newsData);
+						//执行加载数据的方法
+						newsList();
+				})
 			}
 		})
 		})

@@ -28,25 +28,25 @@
 			<div class="layui-form-item">
 			    <label class="layui-form-label">学生姓名</label>
 			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input newsName" value="<s:property value='stu.stu_name' />" lay-verify="required" placeholder="请输入学生姓名" name="stu.stu_name">
+			    	<input type="text" class="layui-input newsName" value="<s:property value='tch.tch_name' />" lay-verify="required" name="tch.tch_name">
 			    </div>
 			</div>
 			<div class="layui-form-item">
 			    <label class="layui-form-label">学生学号</label>
 			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input newsName" lay-verify="required" value="<s:property value='stu.stu_id' />" placeholder="请输入学生学号" name="stu.stu_id">
+			    	<input type="text" class="layui-input newsName" lay-verify="required" value="<s:property value='tch.tch_id' />" name="tch.tch_id">
 			    </div>
 			</div>
 		<div class="layui-form-item">
 				<label class="layui-form-label">性别</label>
-			    <div class="layui-input-block sexDiv" value="<s:property value='stu.sex' />"   style="pointer-events: none;">
-			    	<input type="radio" name="stu.sex" value="男" title="男" class="sex">
-	     			<input type="radio" name="stu.sex" value="女" title="女" class="sex">
-	     			<input type="radio" name="stu.sex" value="保密" title="保密" class="sex">
+			    <div class="layui-input-block sexDiv" value="<s:property value='tch.sex' />"   style="pointer-events: none;">
+			    	<input type="radio" name="tch.sex" value="男" title="男" class="sex">
+	     			<input type="radio" name="tch.sex" value="女" title="女" class="sex">
+	     			<input type="radio" name="tch.sex" value="保密" title="保密" class="sex">
 			    </div>
 			</div>
 			
-			<input type="hidden" name="stu.address" class="address" value="<s:property value='stu.address' />" >
+			<input type="hidden" name="stu.address" class="address" value="<s:property value='tch.address' />" >
 			<div class="layui-form-item">
 			    <label class="layui-form-label">家庭住址</label>
 			    <div class="layui-input-inline"  style="pointer-events: none;">
@@ -68,26 +68,26 @@
 			<div class="layui-form-item">
 			    <label class="layui-form-label">身份证号</label>
 			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input" name="stu.stu_num" placeholder="请输入学生身份证号" value="<s:property value='stu.stu_num' />">
+			    	<input type="text" class="layui-input" name="tch.tch_num" value="<s:property value='tch.tch_num' />">
 			    </div>
 			</div>
 			<div class="layui-form-item">
 			    <label class="layui-form-label">所选专业</label>
 			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input" name="stu.major" placeholder="请输入学生所选专业" value="<s:property value='stu.major' />">
+			    	<input type="text" class="layui-input" name="tch.major" value="<s:property value='tch.major' />">
 			    </div>
 			</div>
 				<div class="layui-form-item">
 			<label class="layui-form-label">密码</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="stu.password" placeholder="请输入学生登录密码" value="<s:property value='stu.password' />">
+				<input type="text" class="layui-input" name="tch.password" value="<s:property value='tch.password' />">
 			</div>
 		</div>
 		</div>
 		<div class="user_right">
 			
 			<img src="" class="layui-circle" id="userFace" url="<s:url value='/Admin/upload'/>" imageSrc="<s:url value='/upload/' />">
-			<input type="hidden" name="stu.image" value="<s:property value='stu.image' />" id="image">
+			<input type="hidden" name="tch.image" value="<s:property value='tch.image' />" id="image">
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">

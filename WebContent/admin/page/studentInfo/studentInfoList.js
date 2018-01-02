@@ -6,16 +6,18 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 		$form = $('form');
-
+		LoadData();
 	//加载页面数据
-	var newsData = '';
-	$.get("/shangcheng/studentInfo/list", function(data){
-        	newsData = data;
-        	newsList(newsData);
-			//执行加载数据的方法
-			newsList();
-	})
-
+	function LoadData(){
+		var newsData = '';
+		$.get("/shangcheng/studentInfo/list", function(data){
+	        	newsData = data;
+	        	newsList(newsData);
+				//执行加载数据的方法
+				newsList();
+		})
+	}
+	
 	//查询
 	$(".search_btn").click(function(){
 		var newArray = [];
@@ -29,7 +31,7 @@ layui.config({
 					data:{"keywords":$(".search_input").val()},
 					success : function(data){
 			        	newsList(data);
-						newsList();
+						
 					}
 				})
             	
@@ -40,7 +42,7 @@ layui.config({
 		}
 	})
 
-	//添加文章
+	//添加学生
 	$(".studentAdd_btn").click(function(){
 		var index = layui.layer.open({
 			title : "添加学生",
@@ -81,12 +83,7 @@ layui.config({
 	    				"data":{"ids":ids.substring(0,ids.length-1)},
 	    				"success":function(data){
 	    					layer.msg("删除成功");
-	    					var newsData = '';
-	    					$.get("/shangcheng/studentInfo/list", function(data){
-	    				        	newsData = data;
-	    				        	newsList(newsData);
-	    							newsList();
-	    					})
+	    					LoadData();
 	    				}
 	    			})
 	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
@@ -142,6 +139,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
+				
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -168,7 +166,24 @@ layui.config({
 		})
 		layui.layer.full(index);
 	})
-
+	
+	$("body").on("click",".stu_course",function(){  //课程查询
+		var _this = $(this);
+		console.log(_this);
+		var index = layui.layer.open({
+			title : "查看学生所选课程",
+			type : 2,
+			content : "courseList.jsp?id="+_this.attr("data-id"),
+			success : function(layero, index){
+				
+			}
+		})
+		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+		$(window).resize(function(){
+			layui.layer.full(index);
+		})
+		layui.layer.full(index);
+	})
 	$("body").on("click",".stu_del",function(){  //删除
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
@@ -177,12 +192,7 @@ layui.config({
 				"data":{"ids":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
-					var newsData = '';
-					$.get("/shangcheng/studentInfo/list", function(data){
-				        	newsData = data;
-				        	newsList(newsData);
-							newsList();
-					})
+					LoadData();
 				}
 			})
 			layer.close(index);
@@ -211,6 +221,7 @@ layui.config({
 			    	+  '<a class="layui-btn layui-btn-normal layui-btn-mini stu_view" data-id="'+data[i].id+'"><i class="layui-icon">&#xe60b;</i> 详细</a>'
 					+  '<a class="layui-btn layui-btn-mini stu_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini stu_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+					+  '<a class="layui-btn layui-btn-warm layui-btn-mini stu_course" data-id="'+data[i].id+'"><i class="layui-icon">&#xe63c;</i> 课程</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}

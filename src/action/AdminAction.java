@@ -23,8 +23,10 @@ import com.opensymphony.xwork2.Preparable;
 
 import entity.Admin;
 import entity.StudentInfo;
+import entity.Teacher;
 import service.IAdminService;
 import service.IStudentInfoService;
+import service.ITeacherService;
 
 @ParentPackage("default")
 @Namespace("/Admin")
@@ -62,6 +64,9 @@ public class AdminAction extends ActionSupport implements Preparable{
 	
 	@Autowired
 	private IStudentInfoService studentInfoService;
+	
+	@Autowired
+	private ITeacherService teacherService;
 	
 	private String image;
 	
@@ -123,6 +128,7 @@ public class AdminAction extends ActionSupport implements Preparable{
 			if(admin != null) {
 				Admin adminResult =  adminService.checkLogin(admin);
 				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), admin.getPassword());
+				Teacher teacher = teacherService.checkLogin(admin.getUsername(), admin.getPassword());
 				if(adminResult == null) {
 					if(studentInfo != null) {
 						name = studentInfo.getStu_name();
@@ -131,7 +137,14 @@ public class AdminAction extends ActionSupport implements Preparable{
 						userName = studentInfo.getStu_id();
 						msg.put("state", true);
 						return "lockScreen";
-					}else {
+					}else if(teacher != null) {
+						name = teacher.getTch_name();
+						type = teacher.getType();
+						id=Integer.toString(teacher.getId());
+						userName = teacher.getTch_id();
+						msg.put("state", true);
+						return "lockScreen";
+					}else{
 						msg.put("state", false);
 						return "lockScreen";
 					}

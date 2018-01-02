@@ -60,7 +60,7 @@ public class CourseService implements ICourseService{
 
 	@Override
 	public List<Course> findByKeyWords(String keywords) {
-		String sql="select * from system_navs where course_name like ? or course_id like ?";
+		String sql="select * from t_course where course_name like ? or course_id like ?";
 		if(StringUtils.isEmpty(keywords)||StringUtils.isBlank(keywords)) {
 			keywords = "";
 		}

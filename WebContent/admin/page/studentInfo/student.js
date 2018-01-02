@@ -1,27 +1,116 @@
+var areaData = address;
+var $form;
+var form;
+var $;
 layui.config({
-	base : "js/"
-}).use(['form','layer','jquery','layedit','laydate'],function(){
-	var form = layui.form(),
-		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
-		layedit = layui.layedit,
-		laydate = layui.laydate,
+	base : "../../js/"
+}).use(['form','layer','upload','laydate','element'],function(){
+	form = layui.form();
+	var layer = parent.layer === undefined ? layui.layer : parent.layer;
 		$ = layui.jquery;
 		$form = $('form');
+		laydate = layui.laydate;
+		element = layui.element();
+        layui.upload({
+        	url : $("#userFace").attr("url"),
+        	success: function(res){
+        		$("#userFace").attr("src",$("#userFace").attr("imageSrc")+res);
+        		$("#image").val(res);
+		    }
+        });
+        $.ajaxSetup({  
+    	    async : false  
+    	}); 
+        if($("#image").val() != ""){
+        	$("#userFace").attr("src",$("#userFace").attr("imageSrc")+$("#image").val());
+        }else{
+        	$("#userFace").attr("src",$("#userFace").attr("imageSrc")+"face.jpg");
+        }
+     
+        //添加验证规则
+        form.verify({
+        	oldPwd : function(value, item){
+               if(value==$("#oldPwd").val()){
+            	   return "新密码与旧密码不能相同";
+               }
+            },
+            newPwd : function(value, item){
+                if(value.length < 6){
+                    return "密码长度不能小于6位";
+                }
+            },
+            confirmPwd : function(value, item){
+                if(!new RegExp($("#oldPwd").val()).test(value)){
+                    return "两次输入密码不一致，请重新输入！";
+                }
+            }
+        })
+      
 
-	//创建一个编辑器
- 	var editIndex = layedit.build('news_content');
- 	var addNewsArray = [],addNews;
- 	$(".layui-btn").click(function(){
-		$(".layui-form").submit();
-		var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:true,shade:0.8});
-		 top.layer.close(index);
-		 top.layer.msg("保存成功");
-	 	 layer.closeAll("iframe");
-		 //刷新父页面
-		 parent.location.reload();
-	});
- 	var areaData;
+        //提交个人资料
+        form.on("submit(changeUser)",function(data){
+        	var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        		 setTimeout(function(){
+        			 $.ajax({  
+        	                cache: true,  
+        	                type: "POST",  
+        	                url:$("#userInfoform").attr("action"),  
+        	                data:$('#userInfoform').serialize(),// 你的formid  
+        	                async: false,  
+        	                error: function(request) {  
+        	                    alert("error");  
+        	                },  
+        	                success: function(data) {  
+        	                	if(data.state){
+        	                		layer.msg(data.msg);
+        	                		var faceImage = $('.faceImage', window.parent.document);
+        	                		for(var i = 0;i<faceImage.length;i++){
+        	                			$(faceImage[i]).attr("src",$("#userFace").attr("src"));
+        	                		}
+        	                	}else{
+        	                		layer.msg(data.msg);
+        	                	}
+        	                }  
+        	            });
+                     layer.close(index);
+                     layer.closeAll("iframe");
+                     window.parent.LoadData();
+                 },2000);
+        		 
+        	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        })
+
+        
+console.log($(".loginout"));
+        //修改密码
+        form.on("submit(changePwd)",function(data){
+        	$.ajax({
+        		"url":$(".changePwd").attr("action"),
+        		"data":{"admin.username":$(".userName").val(),"password":$("#oldPwd").val(),"admin.password":$(".currentPwd").val()},
+        		"success":function(data){
+        			console.log(data);
+        			var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        			if(data.state){
+        				setTimeout(function(){
+                            layer.close(index);
+                            layer.msg(data.msg);
+                            $(".pwd").val('');
+                            window.parent.location.href = $(".changePwd").attr("href");
+                        },1000);
+        			}else{
+                        setTimeout(function(){
+                            layer.close(index);
+                            layer.msg(data.msg,{icon:5,shift:6});
+                            $(".pwd").val('');
+                        },1000);
+        			}
+        			
+        		}
+        	});
+        	
+        	return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        })
+        var areaData;
  	$.ajax({
 			url:"/shangcheng/studentInfo/listForProvice",
 			async : false,
@@ -32,7 +121,13 @@ layui.config({
 			
 		});
  	var address = $(".address").val();
+ 	var flag = true;
  	loadProvince();
+ 	//关闭按钮
+ 	$(".close").click(function(){
+ 		layer.closeAll("iframe");
+ 		return false;
+ 	})
  	
  	 //加载省数据
  	function loadProvince() {
@@ -112,6 +207,7 @@ layui.config({
 	        var city = $("select[name=city]").find("option:selected").text();
         var area =  $("select[name=area]").find("option:selected").text();
 	        $(".address").val(province+city+area);
+	        flag = false;
  	}
 	
  	 //加载市数据
@@ -119,7 +215,7 @@ layui.config({
  		var city = address.substring(address.indexOf('省')+1,address.indexOf('市')+1);
  	    var cityHtml = '<option value="">请选择市</option>';
  	    for (var i = 0; i < citys.length; i++) {
- 	    	if(city == citys[i].name){
+ 	    	if(city == citys[i].name && flag){
  	    		cityHtml += '<option value="' + citys[i].id+'" selected="true">' + citys[i].name + '</option>';
  	    	}else{
  	    		cityHtml += '<option value="' + citys[i].id+'">' + citys[i].name + '</option>';
@@ -153,7 +249,7 @@ layui.config({
  		var area = address.substring(address.indexOf('市')+1,address.length);
  	    var areaHtml = '<option value="">请选择县/区</option>';
  	    for (var i = 0; i < areas.length; i++) {
- 	    	if(area == areas[i].name){
+ 	    	if(area == areas[i].name && flag){
  	    		areaHtml += '<option value="' + areas[i].id + '" selected="true">' + areas[i].name + '</option>';
  	    	}else{
  	    		 areaHtml += '<option value="' + areas[i].id + '">' + areas[i].name + '</option>';
@@ -169,4 +265,8 @@ layui.config({
  	        $(".address").val(province+city+area);
  	    });
  	}
+ 	
+ 
 })
+
+ 

@@ -24,6 +24,7 @@
 <body class="childrenBody">
 	<form class="layui-form"  id="userInfoform" action="<s:url value='/studentInfo/save' />" method="post">
 	<input type="hidden" name="id" value="<s:property value='stu.id' />">
+	<input type="hidden" name="stu.type" value="student" />
 		<div class="user_left">
 			<div class="layui-form-item">
 			    <label class="layui-form-label">学生姓名</label>
@@ -102,7 +103,7 @@
 	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/address.js' /> "></script>
-	<script type="text/javascript" src="<s:url value='/admin/page/user/user.js' /> "></script>
+	<script type="text/javascript" src="<s:url value='/admin/page/studentInfo/student.js' /> "></script>
 </body>
 <script>
 	var radio = $(".sex");

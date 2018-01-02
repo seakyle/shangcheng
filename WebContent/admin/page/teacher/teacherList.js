@@ -5,14 +5,14 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		$ = layui.jquery;
-	$.ajaxSetup({  
-	    async : false  
-	}); 
+		$form = $('form');
+
 	//加载页面数据
 	var newsData = '';
-	$.get("/shangcheng/Navs/list", function(data){
+	$.get("/shangcheng/teacher/list", function(data){
         	newsData = data;
         	newsList(newsData);
+			//执行加载数据的方法
 			newsList();
 	})
 
@@ -21,9 +21,9 @@ layui.config({
 		var newArray = [];
 		if($(".search_input").val() != ''){
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
-			setTimeout(function(){
+            setTimeout(function(){
             	$.ajax({
-					url : "/shangcheng/Navs/findByKeyWords",
+					url : "/shangcheng/teacher/findByKeyWords",
 					type : "post",
 					dataType : "json",
 					data:{"keywords":$(".search_input").val()},
@@ -40,16 +40,22 @@ layui.config({
 		}
 	})
 
-	//添加文章
-	$(".newsAdd_btn").click(function(){
+	//添加学生
+	$(".teacherAdd_btn").click(function(){
 		var index = layui.layer.open({
-			title : "添加模块",
+			title : "添加教师",
 			type : 2,
-			content : "navsAdd.jsp",
+			content : "teacherAdd.jsp",
 			success : function(layero, index){
-				layui.layer.tips('点击此处返回模块列表', '.layui-layer-setwin .layui-layer-close', {
+				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
+				$.get("/shangcheng/teacher/list", function(data){
+		        	newsData = data;
+		        	newsList(newsData);
+					//执行加载数据的方法
+					newsList();
+			})
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -59,45 +65,9 @@ layui.config({
 		layui.layer.full(index);
 	})
 
-	//推荐文章
-	$(".recommend").click(function(){
-		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-				layer.msg("推荐成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要推荐的文章");
-		}
-	})
 
-	//审核文章
-	$(".audit_btn").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('审核中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	for(var j=0;j<$checked.length;j++){
-            		for(var i=0;i<newsData.length;i++){
-						if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-							//修改列表中的文字
-							$checked.eq(j).parents("tr").find("td:eq(3)").text("审核通过").removeAttr("style");
-							//将选中状态删除
-							$checked.eq(j).parents("tr").find('input[type="checkbox"][name="checked"]').prop("checked",false);
-							form.render();
-						}
-					}
-            	}
-                layer.close(index);
-				layer.msg("审核成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要审核的文章");
-		}
-	})
+
+	
 
 	//批量删除
 	$(".batchDel").click(function(){
@@ -113,12 +83,12 @@ layui.config({
 	            		ids += $($checked[i]).attr("data-id")+",";
 	            	}
 	            	$.ajax({
-	    				"url":"/shangcheng/Navs/delete",
+	    				"url":"/shangcheng/teacher/delete",
 	    				"data":{"ids":ids.substring(0,ids.length-1)},
 	    				"success":function(data){
 	    					layer.msg("删除成功");
 	    					var newsData = '';
-	    					$.get("/shangcheng/Navs/list", function(data){
+	    					$.get("/shangcheng/teacher/list", function(data){
 	    				        	newsData = data;
 	    				        	newsList(newsData);
 	    							newsList();
@@ -157,17 +127,25 @@ layui.config({
 		form.render('checkbox');
 	})
 
-	
+	//是否展示
+	form.on('switch(isShow)', function(data){
+		var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+        setTimeout(function(){
+            layer.close(index);
+			layer.msg("展示状态修改成功！");
+        },2000);
+	})
  
 	//操作
-	$("body").on("click",".navs_edit",function(){  //编辑
+	$("body").on("click",".stu_edit",function(){  //编辑
 		var _this = $(this);
+		console.log(_this);
 		var index = layui.layer.open({
-			title : "修改模块",
+			title : "修改教师信息",
 			type : 2,
-			content : "/shangcheng/Navs/view?id="+_this.attr("data-id"),
+			content : "/shangcheng/teacher/edit?id="+_this.attr("data-id"),
 			success : function(layero, index){
-				layui.layer.tips('点击此处返回模块列表', '.layui-layer-setwin .layui-layer-close', {
+				layui.layer.tips('点击此处返回教师信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
 			}
@@ -179,34 +157,34 @@ layui.config({
 		layui.layer.full(index);
 	})
 
-	$("body").on("click",".news_collect",function(){  //收藏.
-		if($(this).text().indexOf("已收藏") > 0){
-			layer.msg("取消收藏成功！");
-			$(this).html("<i class='layui-icon'>&#xe600;</i> 收藏");
-		}else{
-			layer.msg("收藏成功！");
-			$(this).html("<i class='iconfont icon-star'></i> 已收藏");
-		}
+	$("body").on("click",".stu_view",function(){  //详细
+		var _this = $(this);
+		console.log(_this);
+		var index = layui.layer.open({
+			title : "查看教师信息",
+			type : 2,
+			content : "/shangcheng/teacher/view?id="+_this.attr("data-id"),
+			success : function(layero, index){
+				
+			}
+		})
+		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+		$(window).resize(function(){
+			layui.layer.full(index);
+		})
+		layui.layer.full(index);
 	})
 
-	$("body").on("click",".news_del",function(){  //删除
+	$("body").on("click",".stu_del",function(){  //删除
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
-			//_this.parents("tr").remove();
-		/*	for(var i=0;i<newsData.length;i++){
-				if(newsData[i].newsId == _this.attr("data-id")){
-					newsData.splice(i,1);
-					newsList(newsData);
-				}
-			}*/
-			
 			$.ajax({
-				"url":"/shangcheng/Navs/delete",
+				"url":"/shangcheng/teacher/delete",
 				"data":{"ids":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
 					var newsData = '';
-					$.get("/shangcheng/Navs/list", function(data){
+					$.get("/shangcheng/teacher/list", function(data){
 				        	newsData = data;
 				        	newsList(newsData);
 							newsList();
@@ -230,18 +208,15 @@ layui.config({
 				for(var i=0;i<currData.length;i++){
 					dataHtml += '<tr>'
 			    	+'<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose" data-id="'+data[i].id+'"></td>'
-			    	+'<td>'+currData[i].title+'</td>'
-			    	+'<td>'+currData[i].icon+'</td>';
-			    	if(currData[i].spread == "false"){
-			    		dataHtml += '<td>关闭</td>';
-			    	}else{
-			    		dataHtml += '<td>打开</td>';
-			    	}
-			    	dataHtml += '<td>'+currData[i].href+'</td>'
+			    	+'<td>'+currData[i].tch_id+'</td>'
+			    	+'<td>'+currData[i].tch_name+'</td>'
+			    	+'<td>'+currData[i].sex+'</td>'
+			    	+'<td>'+currData[i].major+'</td>'
+			    	+'<td>'+currData[i].password+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini navs_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit"></i> 编辑</a>'
-					+  '<a class="layui-btn layui-btn-normal layui-btn-mini news_collect"><i class="layui-icon">&#xe600;</i> 收藏</a>'
-					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
+			    	+  '<a class="layui-btn layui-btn-normal layui-btn-mini stu_view" data-id="'+data[i].id+'"><i class="layui-icon">&#xe60b;</i> 详细</a>'
+					+  '<a class="layui-btn layui-btn-mini stu_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'
+					+  '<a class="layui-btn layui-btn-danger layui-btn-mini stu_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';
 				}

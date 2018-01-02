@@ -40,7 +40,7 @@ layui.config({
 		}
 	})
 
-	//添加文章
+	//添加课程
 	$(".courseAdd_btn").click(function(){
 		var index = layui.layer.open({
 			title : "添加课程",
@@ -59,46 +59,7 @@ layui.config({
 		layui.layer.full(index);
 	})
 
-	//推荐文章
-	$(".recommend").click(function(){
-		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-				layer.msg("推荐成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要推荐的文章");
-		}
-	})
-
-	//审核文章
-	$(".audit_btn").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('审核中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	for(var j=0;j<$checked.length;j++){
-            		for(var i=0;i<newsData.length;i++){
-						if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-							//修改列表中的文字
-							$checked.eq(j).parents("tr").find("td:eq(3)").text("审核通过").removeAttr("style");
-							//将选中状态删除
-							$checked.eq(j).parents("tr").find('input[type="checkbox"][name="checked"]').prop("checked",false);
-							form.render();
-						}
-					}
-            	}
-                layer.close(index);
-				layer.msg("审核成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要审核的文章");
-		}
-	})
-
+	
 	//批量删除
 	$(".batchDel").click(function(){
 		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');

@@ -52,6 +52,9 @@ public class NavsAction extends ActionSupport implements Preparable{
 		navs = navsService.findByType(type);
 		Iterator<Navs> it = navs.iterator();
 		result = new ArrayList<Navs>();
+		if(navs.size() == 1) {
+			result.add(it.next());
+		}
 		while(it.hasNext()) {
 			Navs navsSingle = it.next();
 			Iterator<Navs> it2 = navs.iterator();
