@@ -13,8 +13,7 @@ layui.config({
 		$.get("/shangcheng/studentInfo/list", function(data){
 	        	newsData = data;
 	        	newsList(newsData);
-				//执行加载数据的方法
-				newsList();
+				
 		})
 	}
 	
@@ -31,10 +30,8 @@ layui.config({
 					data:{"keywords":$(".search_input").val()},
 					success : function(data){
 			        	newsList(data);
-						
 					}
 				})
-            	
                 layer.close(index);
             },2000);
 		}else{
@@ -52,6 +49,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
+				$("#layui-layer-iframe"+index).css("height","460px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -139,7 +137,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
-				
+				$("#layui-layer-iframe"+index).css("height","460px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -151,13 +149,15 @@ layui.config({
 
 	$("body").on("click",".stu_view",function(){  //详细
 		var _this = $(this);
-		console.log(_this);
 		var index = layui.layer.open({
 			title : "查看学生信息",
 			type : 2,
 			content : "/shangcheng/studentInfo/view?id="+_this.attr("data-id"),
 			success : function(layero, index){
-				
+				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
+					tips: 3
+				});
+				$("#layui-layer-iframe"+index).css("height","460px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -175,7 +175,7 @@ layui.config({
 			type : 2,
 			content : "courseList.jsp?id="+_this.attr("data-id"),
 			success : function(layero, index){
-				
+				$("#layui-layer-iframe"+index).css("height","460px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）

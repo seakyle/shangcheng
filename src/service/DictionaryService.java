@@ -60,9 +60,9 @@ public class DictionaryService implements IDictionaryServcie{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Dictionary> findByParentId(int parentId) {
+	public List<Dictionary> findByParentId(String parentId) {
 		String sql = "select * from system_dictionary where parentId = ?";
-		Query query = getSession().createSQLQuery(sql).addEntity(Dictionary.class).setInteger(0, parentId);
+		Query query = getSession().createSQLQuery(sql).addEntity(Dictionary.class).setString(0, parentId);
 		return query.list();
 	}
 
@@ -79,5 +79,13 @@ public class DictionaryService implements IDictionaryServcie{
 	public List<Dictionary> findByKeyWords(String keywords) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Dictionary> findByParentIdList(List<String> parentIdList) {
+		String sql = "select * from system_dictionary where parentId in (:parentId)";
+		Query query = getSession().createSQLQuery(sql).addEntity(Dictionary.class).setParameterList("parentId", parentIdList);
+		return query.list();
 	}
 }

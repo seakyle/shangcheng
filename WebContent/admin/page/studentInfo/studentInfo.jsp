@@ -74,7 +74,9 @@
 			<div class="layui-form-item">
 			    <label class="layui-form-label">所选专业</label>
 			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input" name="stu.major" placeholder="请输入学生所选专业" value="<s:property value='stu.major' />">
+			    	<select name="stu.major" lay-filter="major"  value="<s:property value='stu.major' />">
+	                    <option value="">请选择学生所选专业</option>
+	                </select>
 			    </div>
 			</div>
 		</div>

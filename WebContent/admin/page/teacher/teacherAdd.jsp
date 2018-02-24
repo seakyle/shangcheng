@@ -75,7 +75,9 @@
 			<div class="layui-form-item">
 			    <label class="layui-form-label">所属专业</label>
 			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input" name="tch.major" placeholder="请输入教师所属专业" value="<s:property value='tch.major' />">
+			    	<select name="tch.major" lay-filter="major"  value="<s:property value='tch.major' />" class="major">
+	                    <option value="">请选择教师所属专业</option>
+	                </select>
 			    </div>
 			</div>
 			<div class="layui-form-item">

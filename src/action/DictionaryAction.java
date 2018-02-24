@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -95,27 +94,27 @@ public class DictionaryAction extends ActionSupport implements Preparable{
 	}
 	@Action(value="listForTree", results = { @Result(name = "dictionary", type="json",params={"root","result"})})
 	public String listForTree() {
-		List<Dictionary> dictionaries1 = dictionaryService.findByParentId(0);
+		List<Dictionary> dictionaries1 = dictionaryService.findByParentId("0");
 		Iterator<Dictionary> it = dictionaries1.iterator();
 		result = new ArrayList<Dictionary>();
 		while(it.hasNext()) {
 			Dictionary dictionary1 = it.next();
-			List<Dictionary> dictionaries2 = dictionaryService.findByParentId(dictionary1.getId());
+			List<Dictionary> dictionaries2 = dictionaryService.findByParentId(dictionary1.getCode());
 			if(!dictionaries2.isEmpty()) {
 				Iterator<Dictionary> it2 = dictionaries2.iterator();
 				while(it2.hasNext()) {
 					Dictionary dictionary3 = it2.next();
-					List<Dictionary> dictionaries3 = dictionaryService.findByParentId(dictionary3.getId());
+					List<Dictionary> dictionaries3 = dictionaryService.findByParentId(dictionary3.getCode());
 					if(!dictionaries3.isEmpty()) {
 						Iterator<Dictionary> it3 = dictionaries3.iterator();
 						while(it3.hasNext()) {
 							Dictionary dictionary4 = it3.next();
-							List<Dictionary> dictionaries4 = dictionaryService.findByParentId(dictionary4.getId());
+							List<Dictionary> dictionaries4 = dictionaryService.findByParentId(dictionary4.getCode());
 							if(!dictionaries4.isEmpty()) {
 								Iterator<Dictionary> it4 = dictionaries4.iterator();
 								while(it4.hasNext()) {
 									Dictionary dictionary5 = it4.next();
-									List<Dictionary> dictionaries5 = dictionaryService.findByParentId(dictionary5.getId());
+									List<Dictionary> dictionaries5 = dictionaryService.findByParentId(dictionary5.getCode());
 									dictionary5.setChildren(dictionaries5);
 								}
 							}
@@ -143,6 +142,16 @@ public class DictionaryAction extends ActionSupport implements Preparable{
 		}else {
 			dictionary = dictionaryService.findById(Integer.parseInt(id));
 		}
+	}
+	@Action(value="findMajor", results = { @Result(name = "findMajor", type="json",params={"root","result"})})
+	public String findMajor() {
+		List<Dictionary> collage = dictionaryService.findByParentId("01");
+		List<String> parentId = new ArrayList<String>();
+		for(int i = 0;i<collage.size();i++) {
+			parentId.add(collage.get(i).getCode());
+		}
+		result = dictionaryService.findByParentIdList(parentId);
+		return "findMajor";
 	}
 
 }

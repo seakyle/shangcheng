@@ -19,7 +19,7 @@ public class Dictionary {
 	
 	private String code;//编码
 	
-	private int parentId; //父类型ID
+	private String parentId; //父类型ID
 	
 	private int level; //等级
 	
@@ -51,14 +51,6 @@ public class Dictionary {
 		this.code = code;
 	}
 
-	public int getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
-	}
-
 	public List<Dictionary> getChildren() {
 		return children;
 	}
@@ -73,6 +65,14 @@ public class Dictionary {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	

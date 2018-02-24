@@ -45,11 +45,11 @@ $.get("/shangcheng/dictionary/findAll", function(data){
 })
 $(".layui-btn-xs").click(function(){
 	$(".parentNode").val($(".dictionaryName").val());
+	$(".parentId").val( $(".dictionaryCode").val());
 	$(".dictionaryName").val("");
 	$(".dictionaryCode").val("");
 	var level = $(".dictionaryLevel").val();
 	$(".dictionaryLevel").val(parseInt(level)+1);
-	$(".parentId").val( $(".dictionaryId").val());
 	$(".dictionaryId").val("");
 	$(".layui-btn.layui-btn-xs").hide();
 	return false;

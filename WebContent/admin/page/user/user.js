@@ -134,10 +134,10 @@ console.log($(".loginout"));
  	    var proHtml = '';
  	    for (var i = 0; i < areaData.length; i++) {
  	    	if(province == areaData[i].name){
- 	    		 proHtml += '<option value="' + areaData[i].id+'" selected="true">' + areaData[i].name + '</option>';
+ 	    		 proHtml += '<option value="' + areaData[i].code+'" selected="true">' + areaData[i].name + '</option>';
  	    		 provinceCode = areaData[i];
  	    	}else{
- 	    		 proHtml += '<option value="' + areaData[i].id+'">' + areaData[i].name + '</option>';
+ 	    		 proHtml += '<option value="' + areaData[i].code+'">' + areaData[i].name + '</option>';
  	    	}
  	       
  	    }
@@ -214,9 +214,9 @@ console.log($(".loginout"));
  	    var cityHtml = '<option value="">请选择市</option>';
  	    for (var i = 0; i < citys.length; i++) {
  	    	if(city == citys[i].name && flag){
- 	    		cityHtml += '<option value="' + citys[i].id+'" selected="true">' + citys[i].name + '</option>';
+ 	    		cityHtml += '<option value="' + citys[i].code+'" selected="true">' + citys[i].name + '</option>';
  	    	}else{
- 	    		cityHtml += '<option value="' + citys[i].id+'">' + citys[i].name + '</option>';
+ 	    		cityHtml += '<option value="' + citys[i].code+'">' + citys[i].name + '</option>';
  	    	}
  	        
  	    }
@@ -248,9 +248,9 @@ console.log($(".loginout"));
  	    var areaHtml = '<option value="">请选择县/区</option>';
  	    for (var i = 0; i < areas.length; i++) {
  	    	if(area == areas[i].name && flag){
- 	    		areaHtml += '<option value="' + areas[i].id + '" selected="true">' + areas[i].name + '</option>';
+ 	    		areaHtml += '<option value="' + areas[i].code+ '" selected="true">' + areas[i].name + '</option>';
  	    	}else{
- 	    		 areaHtml += '<option value="' + areas[i].id + '">' + areas[i].name + '</option>';
+ 	    		 areaHtml += '<option value="' + areas[i].code + '">' + areas[i].name + '</option>';
  	    	}
  	       
  	    }
@@ -263,7 +263,25 @@ console.log($(".loginout"));
  	        $(".address").val(province+city+area);
  	    });
  	}
- 	
+ 	$.ajax({
+		url:"/shangcheng/dictionary/findMajor",
+		async : false,
+		success:function(data){
+			var major = $form.find('select[class=major]').attr("value");
+			var html = "";
+			for(var i = 0;i<data.length;i++){
+				if(major == data[i].name){
+					html += "<option value='"+data[i].name+"' selected>"+data[i].name+"</option>";
+				}else{
+					html += "<option value='"+data[i].name+"'>"+data[i].name+"</option>";
+				}
+				
+			}
+			$form.find('select[class=major]').html(html);
+			form.render();
+		}
+		
+	});
 
 })
 

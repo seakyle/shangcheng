@@ -73,8 +73,10 @@
 			</div>
 			<div class="layui-form-item">
 			    <label class="layui-form-label">所选专业</label>
-			    <div class="layui-input-block">
-			    	<input type="text" class="layui-input" name="stu.major" placeholder="请输入学生所选专业" value="<s:property value='stu.major' />">
+			    <div class="layui-input-block" style="pointer-events: none;">
+			    	<select name="stu.major" lay-filter="major"  value="<s:property value='stu.major' />" class="major">
+	                    <option value="">请选择学生所选专业</option>
+	                </select>
 			    </div>
 			</div>
 				<div class="layui-form-item">
@@ -98,7 +100,7 @@
 	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/address.js' /> "></script>
-	<script type="text/javascript" src="<s:url value='/admin/page/user/user.js' /> "></script>
+	<script type="text/javascript" src="<s:url value='/admin/page/studentInfo/student.js' /> "></script>
 </body>
 <script>
 	var radio = $(".sex");

@@ -6,15 +6,19 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 		$form = $('form');
-
+		LoadData();
 	//加载页面数据
-	var newsData = '';
-	$.get("/shangcheng/teacher/list", function(data){
-        	newsData = data;
-        	newsList(newsData);
-			//执行加载数据的方法
-			newsList();
-	})
+	function LoadData(){
+		var newsData = '';
+		$.get("/shangcheng/teacher/list", function(data){
+	        	newsData = data;
+	        	newsList(newsData);
+				//执行加载数据的方法
+				newsList();
+		})
+	}
+	
+	
 
 	//查询
 	$(".search_btn").click(function(){
@@ -29,7 +33,6 @@ layui.config({
 					data:{"keywords":$(".search_input").val()},
 					success : function(data){
 			        	newsList(data);
-						newsList();
 					}
 				})
             	
@@ -50,12 +53,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
-				$.get("/shangcheng/teacher/list", function(data){
-		        	newsData = data;
-		        	newsList(newsData);
-					//执行加载数据的方法
-					newsList();
-			})
+				LoadData();
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）

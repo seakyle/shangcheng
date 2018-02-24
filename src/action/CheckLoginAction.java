@@ -16,6 +16,8 @@ import entity.Teacher;
 import service.IAdminService;
 import service.IStudentInfoService;
 import service.ITeacherService;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 @Namespace(value="/checkLogin")
 public class CheckLoginAction {
@@ -61,8 +63,9 @@ public class CheckLoginAction {
 	public String checkLogin() {
 		try {
 			if(admin != null) {
+				String password = new BASE64Encoder().encodeBuffer(admin.getPassword().getBytes());
 				Admin adminResult =  adminService.checkLogin(admin);
-				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), admin.getPassword());
+				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), password);
 				Teacher teacher = teacherService.checkLogin(admin.getUsername(), admin.getPassword());
 				if(adminResult == null || !code.equals(getRand())) {
 					if(studentInfo != null && code.equals(getRand())) {

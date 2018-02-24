@@ -68,8 +68,7 @@
 		$.get("/shangcheng/studentInfo/list", function(data){
 	        	newsData = data;
 	        	newsList(newsData);
-				//执行加载数据的方法
-				newsList();
+
 		})
 	}
 	
