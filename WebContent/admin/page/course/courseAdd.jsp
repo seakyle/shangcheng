@@ -32,8 +32,15 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">课程学分</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input newsName" value="<s:property value='course.course_credits' />" lay-verify="required" placeholder="请输入课程学分" name="course.course_credits">
-			</div>
+					<select name="course.course_credits" class="layui-input credits" lay-filter="browseLook" value="<s:property value='course.course_credits' />">
+				        <option value="">请选择课程学分</option>
+				        <option value="1.0">1.0</option>
+				        <option value="2.0">2.0</option>
+				        <option value="3.0">3.0</option>
+				        <option value="4.0">4.0</option>
+				        <option value="5.0">5.0</option>
+				    </select>
+				</div>
 		</div>
 		<div class="layui-form-item layui-form-text">
     		<label class="layui-form-label">课程描述</label>

@@ -70,9 +70,10 @@ layui.tree({
 		    $(".dictionaryCode").val(node.code);
 		    $(".dictionaryLevel").val(node.level);
 		    for(var i = 0;i<parentNode.length;i++){
-		    	if(parentNode[i].id == node.parentId){
+		    	if(parentNode[i].code == node.parentId){
 		    		$(".parentNode").val(parentNode[i].name);
-		    		$(".parentId").val(parentNode[i].id);
+		    		$(".parentId").val(parentNode[i].code);
+		    		console.log(parentNode[i].code);
 		    		break;
 		    	}
 		    	$(".parentNode").val("无");

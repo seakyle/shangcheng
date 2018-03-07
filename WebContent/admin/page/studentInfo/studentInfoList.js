@@ -49,7 +49,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
-				$("#layui-layer-iframe"+index).css("height","460px");
+				$("#layui-layer-iframe"+index).css("height","640px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -137,7 +137,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
-				$("#layui-layer-iframe"+index).css("height","460px");
+				$("#layui-layer-iframe"+index).css("height","640px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -157,7 +157,7 @@ layui.config({
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
-				$("#layui-layer-iframe"+index).css("height","460px");
+				$("#layui-layer-iframe"+index).css("height","640px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
@@ -175,7 +175,7 @@ layui.config({
 			type : 2,
 			content : "courseList.jsp?id="+_this.attr("data-id"),
 			success : function(layero, index){
-				$("#layui-layer-iframe"+index).css("height","460px");
+				$("#layui-layer-iframe"+index).css("height","640px");
 			}
 		})
 		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）

@@ -6,10 +6,11 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 		$form = $('form');
+	var basePath = $("body",window.parent.document).attr("basePath");
 
 	//加载页面数据
 	var newsData = '';
-	$.get("/shangcheng/course/list", function(data){
+	$.get(basePath+"/course/list", function(data){
         	newsData = data;
         	newsList(newsData);
 			//执行加载数据的方法
@@ -23,7 +24,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
 			 setTimeout(function(){
 	            	$.ajax({
-						url : "/shangcheng/course/findByKeyWords",
+						url : basePath+"/course/findByKeyWords",
 						type : "post",
 						dataType : "json",
 						data:{"keywords":$(".search_input").val()},
@@ -74,12 +75,12 @@ layui.config({
 	            		ids += $($checked[i]).attr("data-id")+",";
 	            	}
 	            	$.ajax({
-	    				"url":"/shangcheng/course/delete",
+	    				"url":basePath+"/course/delete",
 	    				"data":{"ids":ids.substring(0,ids.length-1)},
 	    				"success":function(data){
 	    					layer.msg("删除成功");
 	    					var newsData = '';
-	    					$.get("/shangcheng/course/list", function(data){
+	    					$.get(basePath+"/course/list", function(data){
 	    				        	newsData = data;
 	    				        	newsList(newsData);
 	    							newsList();
@@ -117,15 +118,6 @@ layui.config({
 		}
 		form.render('checkbox');
 	})
-
-	//是否展示
-	form.on('switch(isShow)', function(data){
-		var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
-            layer.close(index);
-			layer.msg("展示状态修改成功！");
-        },2000);
-	})
  
 	//操作
 	$("body").on("click",".course_edit",function(){  //编辑
@@ -134,7 +126,7 @@ layui.config({
 		var index = layui.layer.open({
 			title : "修改学生信息",
 			type : 2,
-			content : "/shangcheng/course/edit?id="+_this.attr("data-id"),
+			content : basePath+"/course/edit?id="+_this.attr("data-id"),
 			success : function(layero, index){
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
@@ -153,12 +145,12 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
-				"url":"/shangcheng/course/delete",
+				"url":basePath+"/course/delete",
 				"data":{"ids":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
 					var newsData = '';
-					$.get("/shangcheng/course/list", function(data){
+					$.get(basePath+"/course/list", function(data){
 				        	newsData = data;
 				        	newsList(newsData);
 							newsList();

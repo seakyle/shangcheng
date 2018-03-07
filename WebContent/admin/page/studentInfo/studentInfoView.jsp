@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>个人资料--layui后台管理模板</title>
+	<title>学生个人信息查看</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,6 +13,8 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="<s:url value='/admin/layui/css/layui.css' />" media="all" />
 	<link rel="stylesheet" href="<s:url value='/admin/css/user.css' />" media="all" />
+	<link rel="stylesheet" href="<s:url value='/admin/css/cropper.min.css' />" media="all" />
+	<link rel="stylesheet" href="<s:url value='/admin/css/ImgCropping.css' />" media="all" />
 	<style type="text/css">
 		.layui-form-item .layui-input-inline{
 			width: 26%;
@@ -98,6 +100,7 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/cropper.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/address.js' /> "></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/studentInfo/student.js' /> "></script>

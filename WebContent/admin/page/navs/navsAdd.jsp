@@ -152,7 +152,7 @@ $.ajax({
 		$.ajax({
 			url:"<s:url value='/studentInfo/listForSelect' />",
 			async : false,
-			data:{"parentId":data[0].id},
+			data:{"parentId":data[0].code},
 			success:function(data){
 				var html="";
 				var type=$(".type").val().split(",");

@@ -25,7 +25,7 @@
 	href="<s:url value='/admin/css/font-awesome-4.7.0/css/font-awesome.css' />"
 	media="all" />
 </head>
-<body class="main_body">
+<body class="main_body" basePath="<s:url value="/"/>">
 	<div class="layui-layout layui-layout-admin">
 		<!-- 顶部 -->
 		<div class="layui-header header">

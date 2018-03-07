@@ -9,7 +9,7 @@ layui.config({
 
 	//加载页面数据
 	var newsData = '';
-	$.get("/shangcheng/course/list", function(data){
+	$.get($("body").attr("basePath")+"/course/list", function(data){
         	newsData = data;
         	newsList(newsData);
 			//执行加载数据的方法
@@ -23,7 +23,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
 			setTimeout(function(){
             	$.ajax({
-					url : "/shangcheng/course/findByKeyWords",
+					url : $("body").attr("basePath")+"/course/findByKeyWords",
 					type : "post",
 					dataType : "json",
 					data:{"keywords":$(".search_input").val()},
@@ -58,49 +58,6 @@ layui.config({
 		})
 		layui.layer.full(index);
 	})
-
-	//推荐文章
-	$(".recommend").click(function(){
-		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-				layer.msg("推荐成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要推荐的文章");
-		}
-	})
-
-	//审核文章
-	$(".audit_btn").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('审核中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	for(var j=0;j<$checked.length;j++){
-            		for(var i=0;i<newsData.length;i++){
-						if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-							//修改列表中的文字
-							$checked.eq(j).parents("tr").find("td:eq(3)").text("审核通过").removeAttr("style");
-							//将选中状态删除
-							$checked.eq(j).parents("tr").find('input[type="checkbox"][name="checked"]').prop("checked",false);
-							form.render();
-						}
-					}
-            	}
-                layer.close(index);
-				layer.msg("审核成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要审核的文章");
-		}
-	})
-
-	
-
 	
 	//是否展示
 	form.on('switch(isChoose)', function(data){
@@ -108,7 +65,7 @@ layui.config({
 			var index = layer.msg('选课中，请稍候',{icon: 16,time:false,shade:0.8});
 			console.log($(this)["0"].attributes[5].nodeValue);
 			$.ajax({
-				"url":"/shangcheng/course/save",
+				"url":$("body").attr("basePath")+"/course/save",
 				"data":{"id":$(this)["0"].attributes[5].nodeValue},
 				"success":function(data){
 					  setTimeout(function(){
@@ -121,7 +78,7 @@ layui.config({
 		}else{
 			var index = layer.msg('退选中，请稍候',{icon: 16,time:false,shade:0.8});
 			$.ajax({
-				"url":"/shangcheng/course/withdrawal",
+				"url":$("body").attr("basePath")+"/course/withdrawal",
 				"data":{"id":$(this)["0"].attributes[5].nodeValue},
 				"success":function(data){
 					  setTimeout(function(){
@@ -141,7 +98,7 @@ layui.config({
 		var index = layui.layer.open({
 			title : "修改学生信息",
 			type : 2,
-			content : "/shangcheng/course/edit?id="+_this.attr("data-id"),
+			content : $("body").attr("basePath")+"/course/edit?id="+_this.attr("data-id"),
 			success : function(layero, index){
 				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
@@ -160,12 +117,12 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
-				"url":"/shangcheng/course/delete",
+				"url":$("body").attr("basePath")+"/course/delete",
 				"data":{"id":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
 					var newsData = '';
-					$.get("/shangcheng/course/list", function(data){
+					$.get($("body").attr("basePath")+"/course/list", function(data){
 				        	newsData = data;
 				        	newsList(newsData);
 							newsList();

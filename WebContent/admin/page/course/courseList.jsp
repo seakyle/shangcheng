@@ -27,12 +27,7 @@
 		<div class="layui-inline">
 			<a class="layui-btn layui-btn-normal courseAdd_btn">添加课程</a>
 		</div>
-		<div class="layui-inline">
-			<a class="layui-btn recommend" style="background-color:#5FB878">推荐文章</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn audit_btn">审核文章</a>
-		</div>
+		
 		<div class="layui-inline">
 			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
 		</div>

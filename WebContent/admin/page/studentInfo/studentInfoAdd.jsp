@@ -13,11 +13,14 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="<s:url value='/admin/layui/css/layui.css' />" media="all" />
 	<link rel="stylesheet" href="<s:url value='/admin/css/user.css' />" media="all" />
+	<link rel="stylesheet" href="<s:url value='/admin/css/cropper.min.css' />" media="all" />
+	<link rel="stylesheet" href="<s:url value='/admin/css/ImgCropping.css' />" media="all" />
 	<style type="text/css">
 		.layui-form-item .layui-input-inline{
 			width: 26%;
 			margin-right: 9px;
 		}
+		
 	</style>
 </head>
 
@@ -89,11 +92,41 @@
 		</div>
 		
 		<div class="user_right">
-			<input type="file" name="file" class="layui-upload-file" lay-title="我要更换头像">
+			<button type="button" class="l-btn" id="replaceImg">我要更换头像</button>
 			<p></p>
 			<img src="" class="layui-circle" id="userFace" url="<s:url value='/Admin/upload'/>" imageSrc="<s:url value='/upload/' />">
-			<input type="hidden" name="stu.image" value="<s:property value='stu.image' />" id="image">
+			<input type="hidden" name="stu.image" value="<s:property value='admin.image' />" id="image">
 		</div>
+		<!--图片裁剪框 start-->
+<div style="display: none" class="tailoring-container">
+    <div class="black-cloth" onclick="closeTailor(this)"></div>
+    <div class="tailoring-content">
+            <div class="tailoring-content-one">
+                <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+                    <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)">
+                    选择图片
+                </label>
+                <div class="close-tailoring"  onclick="closeTailor(this)">×</div>
+            </div>
+            <div class="tailoring-content-two">
+                <div class="tailoring-box-parcel">
+                    <img id="tailoringImg">
+                </div>
+                <div class="preview-box-parcel">
+                    <p>图片预览：</p>
+                    <div class="square previewImg"></div>
+                    <div class="circular previewImg"></div>
+                </div>
+            </div>
+            <div class="tailoring-content-three">
+                <button class="l-btn cropper-reset-btn" type="button">复位</button>
+                <button class="l-btn cropper-rotate-btn" type="button">旋转</button>
+                <button class="l-btn cropper-scaleX-btn" type="button">换向</button>
+                <button class="l-btn sureCut" id="sureCut" type="button">确定</button>
+            </div>
+        </div>
+</div>
+<!--图片裁剪框 end-->
 		
 		<div class="layui-form-item" style="margin-left: 5%;">
 		    <div class="layui-input-block">
@@ -103,6 +136,7 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/cropper.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/address.js' /> "></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/studentInfo/student.js' /> "></script>
@@ -115,6 +149,22 @@
 			break;
 		}
 	}
-	
+	//图像上传
+    function selectImg(file) {
+        if (!file.files || !file.files[0]){
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var replaceSrc = evt.target.result;
+            //更换cropper的图片
+            $('#tailoringImg').cropper('replace', replaceSrc,false);//默认false，适应高度，不失真
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+    //关闭裁剪框
+    function closeTailor() {
+        $(".tailoring-container").toggle();
+    }
 </script>
 </html>
