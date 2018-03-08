@@ -6,10 +6,10 @@ layui.config({
 		laypage = layui.laypage,
 		$ = layui.jquery;
 		$form = $('form');
-
+		var basePath = $("body",window.parent.document).attr("basePath");
 	//加载页面数据
 	var newsData = '';
-	$.get($("body").attr("basePath")+"/course/list", function(data){
+	$.get(basePath+"/course/list", function(data){
         	newsData = data;
         	newsList(newsData);
 			//执行加载数据的方法

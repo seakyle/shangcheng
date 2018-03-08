@@ -36,27 +36,14 @@
 	</style>
 </head>
 <body class="childrenBody">
-	<blockquote class="layui-elem-quote news_search">
-		<div class="layui-inline">
-		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
-		    </div>
-		    <a class="layui-btn search_btn">查询</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal newsAdd_btn">添加模块</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn recommend" style="background-color:#5FB878">推荐文章</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn audit_btn">审核文章</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
-		</div>
-		
-	</blockquote>
+<!-- 	<blockquote class="layui-elem-quote news_search"> -->
+<!-- 		<div class="layui-inline"> -->
+<!-- 		    <div class="layui-input-inline"> -->
+<!-- 		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input"> -->
+<!-- 		    </div> -->
+<!-- 		    <a class="layui-btn search_btn">查询</a> -->
+<!-- 		</div> -->
+<!-- 	</blockquote> -->
 	 
 	<div class="layui-form news_list">
 	  	<ul id="demo"></ul>

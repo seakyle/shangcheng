@@ -58,7 +58,7 @@
 		</table>
 	</div>
 	<div id="page"></div>
-	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/jquery.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/studentInfo/studentInfoList.js' />"></script>
 	<script>

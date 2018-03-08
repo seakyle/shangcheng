@@ -10,12 +10,25 @@ layui.config({
 	//创建一个编辑器
  	var editIndex = layedit.build('news_content');
  	var addNewsArray = [],addNews;
-	$(".layui-btn").click(function(){
-		$(".layui-form").submit();
-		 top.layer.msg("保存成功");
-	 	 layer.closeAll("iframe");
+	$(".layui-btn.submit").click(function(){
+		var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
+		 setTimeout(function(){
+			$.ajax({
+				url:$(".layui-form").attr("href"),
+				data:$(".layui-form").serialize(),
+				success:function(){
+					 layer.close(index);
+					 layer.closeAll("iframe");
+					 top.layer.msg("保存成功");
+					 window.parent.LoadData();
+				}
+			})
+          },2000);
+		 
+		 return false;
+		 
 		 //刷新父页面
-	 	parent.location.reload();
+	 	//parent.location.reload();
 	});
 	//是否展示
 	form.on('switch(isShow)', function(data){
@@ -31,5 +44,8 @@ layui.config({
         },500);
         $(".navSpread").val($(".spread").val());
 	})
-	
+	$(".close").click(function(){
+ 		layer.closeAll("iframe");
+ 		return false;
+ 	})
 })

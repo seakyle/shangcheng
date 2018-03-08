@@ -36,19 +36,19 @@
     }
 	</style>
 <body class="childrenBody">
-	<form class="layui-form" href="<s:url value='/Navs/save' />">
+	<form class="layui-form" action="<s:url value='/Navs/save' />">
 	<input type="hidden" name="id" value="<s:property value='nav.id' />">
 		<div class="layui-form-item">
 			<label class="layui-form-label">模块标题</label>
 			<div class="layui-input-block">
-				<input type="text" name="nav.title" class="layui-input modelTitle" lay-verify="required" placeholder="请输入模块标题" value="<s:property value='nav.title' />">
+				<input type="text" name="nav.title" class="layui-input modelTitle" lay-verify="required" placeholder="请输入模块标题" value="<s:property value='nav.title' />" >
 			</div>
 		</div>
 		<div class="layui-form-item">
 			
 			<div class="layui-inline">		
 				<label class="layui-form-label">模块图标</label>
-				<div class="layui-input-inline modelIcon">
+				<div class="layui-input-inline modelIcon"  style="pointer-events: none;">
 					<select name="nav.icon" class="icon" lay-filter="browseLook" value="<s:property value='nav.icon' />">
 				        <option value=""></option>
 				    </select>
@@ -60,14 +60,14 @@
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label">父模块</label>
-				<div class="layui-input-inline">
+				<div class="layui-input-inline"  style="pointer-events: none;">
 					<select name="parentId" class="parentNode" lay-filter="browseLook" value="<s:property value='nav.parentId' />">
 				        <option value=""></option>
 				    </select>
 				</div>
 			</div>
 		</div>
-		<div class="layui-form-item">
+		<div class="layui-form-item"  style="pointer-events: none;">
 		<label class="layui-form-label">权限</label>
 			<div class="layui-input-block  role">
 									
@@ -76,7 +76,7 @@
 		</div>
 		<input type="hidden" value="<s:property value='nav.type' />" class="type" />
 		<div class="layui-form-item">
-			<div class="layui-inline">
+			<div class="layui-inline"  style="pointer-events: none;">
 				<label class="layui-form-label">节点状态</label>
 				<div class="layui-input-inline">
 					<input type="checkbox" lay-skin="switch" lay-text="展开|关闭" lay-filter="isShow" value="<s:property value='nav.spread' />" class="spread">
@@ -93,8 +93,7 @@
 		
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn submit" lay-submit="" lay-filter="addNews">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				<button class="layui-btn close" lay-filter="close">关闭</button>
 		    </div>
 		</div>
 	</form>
@@ -179,6 +178,8 @@ $.ajax({
 		
 	}
 }); 
+var $layuiInput = $(".layui-input");
+$layuiInput.attr("readonly","true");
 </script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/navs/navsAdd.js' />"></script>

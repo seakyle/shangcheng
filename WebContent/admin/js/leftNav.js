@@ -1,5 +1,6 @@
 function navBar(data){
 	var ulHtml = '<ul class="layui-nav layui-nav-tree">';
+	var basePath = $("body").attr("basePath");
 	for(var i=0;i<data.length;i++){
 		if(data[i].spread){
 			ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
@@ -22,7 +23,7 @@ function navBar(data){
 			ulHtml += '</a>'
 			ulHtml += '<dl class="layui-nav-child">';
 			for(var j=0;j<data[i].children.length;j++){
-				ulHtml += '<dd><a href="javascript:;" data-url="'+data[i].children[j].href+'">';
+				ulHtml += '<dd><a href="javascript:;" data-url="'+basePath+data[i].children[j].href+'">';
 				if(data[i].children[j].icon != undefined && data[i].children[j].icon != ''){
 					if(data[i].children[j].icon.indexOf("icon-") != -1){
 						ulHtml += '<i class="iconfont '+data[i].children[j].icon+'" data-icon="'+data[i].children[j].icon+'"></i>';
@@ -36,7 +37,7 @@ function navBar(data){
 			}
 			ulHtml += "</dl>"
 		}else{
-			ulHtml += '<a href="javascript:;" data-url="'+data[i].href+'">';
+			ulHtml += '<a href="javascript:;" data-url="'+basePath+data[i].href+'">';
 			if(data[i].icon != undefined && data[i].icon != ''){
 				if(data[i].icon.indexOf("icon-") != -1){
 					ulHtml += '<i class="iconfont '+data[i].icon+'" data-icon="'+data[i].icon+'"></i>';

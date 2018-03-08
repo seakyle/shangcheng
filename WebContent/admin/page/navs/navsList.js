@@ -5,16 +5,20 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		$ = layui.jquery;
+	var basePath = $("body",window.parent.document).attr("basePath");
 	$.ajaxSetup({  
 	    async : false  
 	}); 
+	LoadData();
 	//加载页面数据
-	var newsData = '';
-	$.get("/shangcheng/Navs/list", function(data){
-        	newsData = data;
-        	newsList(newsData);
-			newsList();
-	})
+	function LoadData(){
+		var newsData = '';
+		$.get(basePath+"/Navs/list", function(data){
+	        	newsData = data;
+	        	newsList(newsData);
+		})
+	}
+	
 
 	//查询
 	$(".search_btn").click(function(){
@@ -23,13 +27,12 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
 			setTimeout(function(){
             	$.ajax({
-					url : "/shangcheng/Navs/findByKeyWords",
+					url : basePath+"/Navs/findByKeyWords",
 					type : "post",
 					dataType : "json",
 					data:{"keywords":$(".search_input").val()},
 					success : function(data){
 			        	newsList(data);
-						newsList();
 					}
 				})
             	
@@ -40,7 +43,7 @@ layui.config({
 		}
 	})
 
-	//添加文章
+	//添加模块
 	$(".newsAdd_btn").click(function(){
 		var index = layui.layer.open({
 			title : "添加模块",
@@ -59,46 +62,6 @@ layui.config({
 		layui.layer.full(index);
 	})
 
-	//推荐文章
-	$(".recommend").click(function(){
-		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-				layer.msg("推荐成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要推荐的文章");
-		}
-	})
-
-	//审核文章
-	$(".audit_btn").click(function(){
-		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
-		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('审核中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-            	for(var j=0;j<$checked.length;j++){
-            		for(var i=0;i<newsData.length;i++){
-						if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-							//修改列表中的文字
-							$checked.eq(j).parents("tr").find("td:eq(3)").text("审核通过").removeAttr("style");
-							//将选中状态删除
-							$checked.eq(j).parents("tr").find('input[type="checkbox"][name="checked"]').prop("checked",false);
-							form.render();
-						}
-					}
-            	}
-                layer.close(index);
-				layer.msg("审核成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要审核的文章");
-		}
-	})
-
 	//批量删除
 	$(".batchDel").click(function(){
 		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
@@ -113,16 +76,11 @@ layui.config({
 	            		ids += $($checked[i]).attr("data-id")+",";
 	            	}
 	            	$.ajax({
-	    				"url":"/shangcheng/Navs/delete",
+	    				"url":basePath+"/Navs/delete",
 	    				"data":{"ids":ids.substring(0,ids.length-1)},
 	    				"success":function(data){
 	    					layer.msg("删除成功");
-	    					var newsData = '';
-	    					$.get("/shangcheng/Navs/list", function(data){
-	    				        	newsData = data;
-	    				        	newsList(newsData);
-	    							newsList();
-	    					})
+	    					LoadData();
 	    				}
 	    			})
 	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
@@ -165,7 +123,7 @@ layui.config({
 		var index = layui.layer.open({
 			title : "修改模块",
 			type : 2,
-			content : "/shangcheng/Navs/view?id="+_this.attr("data-id"),
+			content : basePath+"/Navs/edit?id="+_this.attr("data-id"),
 			success : function(layero, index){
 				layui.layer.tips('点击此处返回模块列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
@@ -179,38 +137,34 @@ layui.config({
 		layui.layer.full(index);
 	})
 
-	$("body").on("click",".news_collect",function(){  //收藏.
-		if($(this).text().indexOf("已收藏") > 0){
-			layer.msg("取消收藏成功！");
-			$(this).html("<i class='layui-icon'>&#xe600;</i> 收藏");
-		}else{
-			layer.msg("收藏成功！");
-			$(this).html("<i class='iconfont icon-star'></i> 已收藏");
-		}
+	$("body").on("click",".nav_view",function(){  //修改
+		var _this = $(this);
+		var index = layui.layer.open({
+			title : "修改模块",
+			type : 2,
+			content : basePath+"/Navs/view?id="+_this.attr("data-id"),
+			success : function(layero, index){
+				layui.layer.tips('点击此处返回模块列表', '.layui-layer-setwin .layui-layer-close', {
+					tips: 3
+				});
+			}
+		})
+		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+		$(window).resize(function(){
+			layui.layer.full(index);
+		})
+		layui.layer.full(index);
 	})
 
 	$("body").on("click",".news_del",function(){  //删除
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
-			//_this.parents("tr").remove();
-		/*	for(var i=0;i<newsData.length;i++){
-				if(newsData[i].newsId == _this.attr("data-id")){
-					newsData.splice(i,1);
-					newsList(newsData);
-				}
-			}*/
-			
 			$.ajax({
-				"url":"/shangcheng/Navs/delete",
+				"url":basePath+"/Navs/delete",
 				"data":{"ids":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
-					var newsData = '';
-					$.get("/shangcheng/Navs/list", function(data){
-				        	newsData = data;
-				        	newsList(newsData);
-							newsList();
-					})
+					LoadData();
 				}
 			})
 			layer.close(index);
@@ -240,7 +194,7 @@ layui.config({
 			    	dataHtml += '<td>'+currData[i].href+'</td>'
 			    	+'<td>'
 					+  '<a class="layui-btn layui-btn-mini navs_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit"></i> 编辑</a>'
-					+  '<a class="layui-btn layui-btn-normal layui-btn-mini news_collect"><i class="layui-icon">&#xe600;</i> 收藏</a>'
+			    	+  '<a class="layui-btn layui-btn-normal layui-btn-mini nav_view" data-id="'+data[i].id+'"><i class="layui-icon">&#xe60b;</i> 详细</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].id+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
 			    	+'</tr>';

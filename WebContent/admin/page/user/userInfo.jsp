@@ -100,7 +100,7 @@
 		<!--图片裁剪框 start-->
 <div style="display: none" class="tailoring-container">
     <div class="black-cloth" onclick="closeTailor(this)"></div>
-    <div class="tailoring-content">
+    <div class="tailoring-content layui-anim layui-anim-scale">
             <div class="tailoring-content-one">
                 <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
                     <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)">

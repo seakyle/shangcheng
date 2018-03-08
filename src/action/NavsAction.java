@@ -79,8 +79,14 @@ public class NavsAction extends ActionSupport implements Preparable{
 		return "list";
 	}
 	@Action(value="view",results = {
-            @Result(name = "success", location = "/admin/page/navs/navsAdd.jsp")})
+            @Result(name = "success", location = "/admin/page/navs/navsView.jsp")})
 	public String view() {
+		nav = navsService.findById(Integer.parseInt(id));
+		return "success";
+	}
+	@Action(value="edit",results = {
+            @Result(name = "success", location = "/admin/page/navs/navsAdd.jsp")})
+	public String edit() {
 		nav = navsService.findById(Integer.parseInt(id));
 		return "success";
 	}

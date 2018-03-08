@@ -1,6 +1,7 @@
 var $,tab,skyconsWeather;
+var basePath = $("body").attr("basePath");
 layui.config({
-	base : "/shangcheng/admin/js/"
+	base : basePath+"/admin/js/"
 }).use(['bodyTab','form','element','layer','jquery'],function(){
 	var form = layui.form(),
 		layer = layui.layer,

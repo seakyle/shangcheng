@@ -5,18 +5,19 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		$ = layui.jquery;
+	var basePath = $("body",window.parent.document).attr("basePath");
 	$.ajaxSetup({  
 	    async : false  
 	}); 
 	//加载页面数据
 	var newsData = '';
-	$.get("/shangcheng/Navs/list", function(data){
+	$.get(basePath+"/Navs/list", function(data){
         	newsData = data;
         	newsList(newsData);
 			newsList();
 	})
 var treeData;
-$.get("/shangcheng/dictionary/listForTree", function(data){
+$.get(basePath+"/dictionary/listForTree", function(data){
 	var parentNode = $(".parentNode");
 	var html;
 	for(var i = 0;i<data.length;i++){
@@ -40,7 +41,7 @@ $.get("/shangcheng/dictionary/listForTree", function(data){
 	}
 	})
 var parentNode;
-$.get("/shangcheng/dictionary/findAll", function(data){
+$.get(basePath+"/dictionary/findAll", function(data){
 	parentNode=data;
 })
 $(".layui-btn-xs").click(function(){
@@ -274,7 +275,7 @@ layui.tree({
 		var index = layui.layer.open({
 			title : "修改模块",
 			type : 2,
-			content : "/shangcheng/Navs/view?id="+_this.attr("data-id"),
+			content : basePath+"/Navs/view?id="+_this.attr("data-id"),
 			success : function(layero, index){
 				layui.layer.tips('点击此处返回模块列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
@@ -310,12 +311,12 @@ layui.tree({
 			}*/
 			
 			$.ajax({
-				"url":"/shangcheng/Navs/delete",
+				"url":basePath+"/Navs/delete",
 				"data":{"id":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");
 					var newsData = '';
-					$.get("/shangcheng/Navs/list", function(data){
+					$.get(basePath+"/Navs/list", function(data){
 				        	newsData = data;
 				        	newsList(newsData);
 							newsList();
@@ -387,7 +388,7 @@ layui.tree({
 				 top.layer.msg("保存成功");
 			 	 //layer.closeAll("iframe");
 			 	var parentNode;
-			 	$.get("/shangcheng/dictionary/findAll", function(data){
+			 	$.get(basePath+"/dictionary/findAll", function(data){
 			 		parentNode=data;
 			 	});
 			 	layui.tree({
@@ -417,7 +418,7 @@ layui.tree({
 });
 	$(".delete").click(function(){
 		$.ajax({
-			"url":"/shangcheng/dictionary/delete",
+			"url":basePath+"/dictionary/delete",
 			"data":{"id":$(".dictionaryId").val()},
 			"success":function(data){
 				 top.layer.msg("删除成功");

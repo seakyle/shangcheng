@@ -95,12 +95,12 @@
 			<button type="button" class="l-btn" id="replaceImg">我要更换头像</button>
 			<p></p>
 			<img src="" class="layui-circle" id="userFace" url="<s:url value='/Admin/upload'/>" imageSrc="<s:url value='/upload/' />">
-			<input type="hidden" name="stu.image" value="<s:property value='admin.image' />" id="image">
+			<input type="hidden" name="stu.image" value="<s:property value='stu.image' />" id="image">
 		</div>
 		<!--图片裁剪框 start-->
 <div style="display: none" class="tailoring-container">
     <div class="black-cloth" onclick="closeTailor(this)"></div>
-    <div class="tailoring-content">
+    <div class="tailoring-content  layui-anim layui-anim-scale">
             <div class="tailoring-content-one">
                 <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
                     <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)">
@@ -135,7 +135,7 @@
 		    </div>
 		</div>
 	</form>
-	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/jquery.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/js/cropper.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/address.js' /> "></script>
