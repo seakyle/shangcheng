@@ -3,6 +3,7 @@ package action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
+import service.ICourseService;
 import service.IDictionaryServcie;
 import service.ITeacherService;
 
@@ -48,6 +50,9 @@ public class TeacherAction extends ActionSupport implements Preparable{
 	
 	@Autowired
 	private ITeacherService teacherService;
+	
+	@Autowired
+	private ICourseService courseService;
 	
 	private Map<String,Object> msg = new HashMap<String,Object>();
 	
@@ -232,6 +237,13 @@ public class TeacherAction extends ActionSupport implements Preparable{
 				String[] id = ids.split(",");
 				for(int i = 0;i<id.length;i++) {
 					Teacher tchDelete = teacherService.findById(Integer.parseInt(id[i]));
+					Set<Course> courseSet = tchDelete.getCourse();
+					Iterator<Course> it = courseSet.iterator();
+					while(it.hasNext()) {
+						Course course = it.next();
+						course.setTeacher(null);
+						courseService.saveOrUpdate(course);
+					}
 					teacherService.delete(tchDelete);
 				}
 			}

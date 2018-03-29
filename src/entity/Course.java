@@ -11,12 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+/*
+ * 课程信息表
+ */
 
 @Entity(name="t_course")
 public class Course {
 	@Id  
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.AUTO) 
 	private int id; //ID
 	
 	private String course_id;//课程编号
@@ -27,11 +32,14 @@ public class Course {
 	
 	private String course_description;//课程描述
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private Set<StudentInfo> student;
+	private String image;//课程封面
 	
 	@ManyToMany(fetch=FetchType.EAGER)
-	private Set<Teacher> teacher;
+	@OrderBy("id")
+	private Set<StudentInfo> student;
+	
+	@ManyToOne
+	private Teacher teacher;
 	
 	public int getId() {
 		return id;
@@ -81,12 +89,21 @@ public class Course {
 		this.student = student;
 	}
 
-	public Set<Teacher> getTeacher() {
+	
+	public Teacher getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Set<Teacher> teacher) {
+	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

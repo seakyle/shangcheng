@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-
+/*
+ * 字典管理表
+ */
 @Entity(name="system_dictionary")
 public class Dictionary {
 	

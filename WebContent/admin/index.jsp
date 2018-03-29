@@ -147,6 +147,7 @@
 					你好！<span class="name"><s:property value="name" /></span>, 欢迎登录 <input
 						type="hidden" class="id" value="<s:property value="id" />" />
 				</p>
+				<input type="hidden" class="tch_id" value="<s:property value="tch_id" />">
 				<input type="hidden" class="type"
 					value="<s:property value='type' />" /> <input type="hidden"
 					class="userName" value="<s:property value='userName' />" />
@@ -191,7 +192,7 @@
 	</div>
 	<div class="site-mobile-shade"></div>
 	<script type="text/javascript"
-		src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+		src="<s:url value='/admin/js/jquery.min.js' />"></script>
 	<script type="text/javascript"
 		src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/js/nav.js' />"></script>

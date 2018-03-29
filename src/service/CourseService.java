@@ -30,7 +30,11 @@ public class CourseService implements ICourseService{
 
 	@Override
 	public void saveOrUpdate(Course course) {
+		String sql = "SET FOREIGN_KEY_CHECKS=0";
+		getSession().createSQLQuery(sql).executeUpdate();
 		getSession().saveOrUpdate(course);
+		sql = "SET FOREIGN_KEY_CHECKS=1";
+		getSession().createSQLQuery(sql).executeUpdate();
 	}
 
 	@Override
@@ -58,6 +62,7 @@ public class CourseService implements ICourseService{
 		return sessionFactory.getCurrentSession();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> findByKeyWords(String keywords) {
 		String sql="select * from t_course where course_name like ? or course_id like ?";
@@ -66,6 +71,14 @@ public class CourseService implements ICourseService{
 		}
 		
 		Query query = getSession().createSQLQuery(sql).addEntity(Course.class).setString(0, "%"+keywords+"%").setString(1, "%"+keywords+"%");
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Course> findCourseByTeacher(int tch_id) {
+		String sql = "select * from t_course where teacher_id = ?";
+		Query query = getSession().createSQLQuery(sql).addEntity(Course.class).setInteger(0, tch_id);
 		return query.list();
 	}
 	

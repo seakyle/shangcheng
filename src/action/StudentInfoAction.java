@@ -173,19 +173,12 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 			student.setCourse(courseSet);
 			stuInfo.add(student);
 		}
-		for(int l = 0;l<stuInfo.size();l++) {
-			String studentPassword = stuInfo.get(l).getPassword();
-			String password = new String (new BASE64Decoder().decodeBuffer(studentPassword));
-			stuInfo.get(l).setPassword(password);
-		}
 		return "list";
 	}
 
 	@Action(value="save",results = { @Result(name = "save", type="json",params={"root","msg"})})
 	public String save() {
 		try {
-			String password = new BASE64Encoder().encodeBuffer(stu.getPassword().getBytes());
-			stu.setPassword(password);
 			studentInfoService.saveOrUpdate(stu);
 			msg.put("state", true);
 			msg.put("msg", "保存成功");
@@ -275,8 +268,6 @@ public class StudentInfoAction extends ActionSupport implements Preparable{
 			stu = new StudentInfo();
 		}else {
 			stu = studentInfoService.findById(Integer.parseInt(id));
-			String password = new String (new BASE64Decoder().decodeBuffer(stu.getPassword()));
-			stu.setPassword(password);
 		}
 	}
 }

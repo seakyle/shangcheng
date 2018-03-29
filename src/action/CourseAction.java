@@ -18,12 +18,14 @@ import com.opensymphony.xwork2.Preparable;
 
 import entity.Course;
 import entity.StudentInfo;
+import entity.Teacher;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
 import service.ICourseService;
 import service.IStudentInfoService;
+import service.ITeacherService;
 
 @ParentPackage("default")  
 @Namespace("/course")
@@ -49,8 +51,15 @@ public class CourseAction extends ActionSupport implements Preparable{
 	
 	private String studentId;
 	
+	private String resource;//来源
+	
+	private String teacher;//任课教师id
+	
 	@Autowired
 	private IStudentInfoService studentInfoService;
+	
+	@Autowired
+	private ITeacherService teacherService;
 
 	public ICourseService getCourseService() {
 		return courseService;
@@ -109,6 +118,23 @@ public class CourseAction extends ActionSupport implements Preparable{
 		this.studentId = studentId;
 	}
 
+	public String getResource() {
+		return resource;
+	}
+
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
+
+	
+	public String getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(String teacher) {
+		this.teacher = teacher;
+	}
+
 	@Override
 	public void prepare() throws Exception {
 		if(id == null ||id.equals("")) {
@@ -149,6 +175,10 @@ public class CourseAction extends ActionSupport implements Preparable{
 			student=course.getStudent();
 			student.add(studentInfo);
 			course.setStudent(student);
+		}
+		if(teacher != null||teacher != "") {
+			Teacher teacherSingle = teacherService.findById(Integer.parseInt(teacher));
+			course.setTeacher(teacherSingle);
 		}
 		courseService.saveOrUpdate(course);
 		return NONE;
@@ -202,5 +232,18 @@ public class CourseAction extends ActionSupport implements Preparable{
 	public String findByKeyWords() {
 		courseList = courseService.findByKeyWords(keywords);
 		return "findByKeyWords";
+	}
+	@Action(value="findCourseByTeacher",results= {@Result(name = "findCourseByTeacher", type="json",params={"root","courseList"})})
+	public String findCourseByTeacher() {
+		if(teacher.equals("0") ) {
+			courseList = courseService.findAll();
+		}else {
+			courseList = courseService.findCourseByTeacher(Integer.parseInt(teacher));
+		}
+		return "findCourseByTeacher";
+	}
+	@Action(value="findById",results= {@Result(name = "findById", type="json",params={"root","course"})})
+	public String findById() {
+		return "findById";
 	}
 }

@@ -23,7 +23,7 @@ layui.config({
 			var index = layer.msg('查询中，请稍候',{icon: 16,time:false,shade:0.8});
 			setTimeout(function(){
             	$.ajax({
-					url : $("body").attr("basePath")+"/course/findByKeyWords",
+					url : basePath+"/course/findByKeyWords",
 					type : "post",
 					dataType : "json",
 					data:{"keywords":$(".search_input").val()},
@@ -65,7 +65,7 @@ layui.config({
 			var index = layer.msg('选课中，请稍候',{icon: 16,time:false,shade:0.8});
 			console.log($(this)["0"].attributes[5].nodeValue);
 			$.ajax({
-				"url":$("body").attr("basePath")+"/course/save",
+				"url":basePath+"/course/save",
 				"data":{"id":$(this)["0"].attributes[5].nodeValue},
 				"success":function(data){
 					  setTimeout(function(){
@@ -78,7 +78,7 @@ layui.config({
 		}else{
 			var index = layer.msg('退选中，请稍候',{icon: 16,time:false,shade:0.8});
 			$.ajax({
-				"url":$("body").attr("basePath")+"/course/withdrawal",
+				"url":basePath+"/course/withdrawal",
 				"data":{"id":$(this)["0"].attributes[5].nodeValue},
 				"success":function(data){
 					  setTimeout(function(){
@@ -117,7 +117,7 @@ layui.config({
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
-				"url":$("body").attr("basePath")+"/course/delete",
+				"url":basePath+"/course/delete",
 				"data":{"id":_this.attr("data-id")},
 				"success":function(data){
 					layer.msg("删除成功");

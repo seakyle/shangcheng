@@ -1,5 +1,6 @@
 package service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -46,9 +47,10 @@ public class AdminService implements IAdminService{
 	}
  
 	@Override
-	public Admin checkLogin(Admin admin) {
+	public Admin checkLogin(Admin admin) throws IOException {
 		String sql = "select * from t_admin where username=? and password=?";
 		Query query = getSession().createSQLQuery(sql).addEntity(Admin.class).setString(0, admin.getUsername()).setString(1, admin.getPassword());
+		System.out.println(admin.getPassword());
 		Admin result =  (Admin) query.uniqueResult();
 		return result;
 	}

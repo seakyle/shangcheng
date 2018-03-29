@@ -49,7 +49,11 @@ public class NavsAction extends ActionSupport implements Preparable{
 	
 	@Action(value="findAll", results = { @Result(name = "navs", type="json",params={"root","result"})})
 	public String findAll() {
-		navs = navsService.findByType(type);
+		String[] typeArray = type.split(",");
+		navs = new ArrayList<Navs>();
+		for(int i = 0;i<typeArray.length;i++) {
+			navs.addAll(navsService.findByType(typeArray[i]));
+		}
 		Iterator<Navs> it = navs.iterator();
 		result = new ArrayList<Navs>();
 		if(navs.size() == 1) {
@@ -64,9 +68,13 @@ public class NavsAction extends ActionSupport implements Preparable{
 				if(navsSingle.getId() == navsSingle2.getParentId()) {
 					navsList.add(navsSingle2);
 				}
+				
 			}
 			navsSingle.setChildren(navsList);
 			if(navsSingle.getParentId() == 0) {
+				result.add(navsSingle);
+			}
+			if(type.contains("teacher") || type.contains("student")) {
 				result.add(navsSingle);
 			}
 		}

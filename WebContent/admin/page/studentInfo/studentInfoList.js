@@ -216,7 +216,7 @@ layui.config({
 			    	+'<td>'+currData[i].stu_name+'</td>'
 			    	+'<td>'+currData[i].sex+'</td>'
 			    	+'<td>'+currData[i].major+'</td>'
-			    	+'<td>'+currData[i].password+'</td>'
+			    	+'<td>'+currData[i].address+'</td>'
 			    	+'<td>'
 			    	+  '<a class="layui-btn layui-btn-normal layui-btn-mini stu_view" data-id="'+data[i].id+'"><i class="layui-icon">&#xe60b;</i> 详细</a>'
 					+  '<a class="layui-btn layui-btn-mini stu_edit" data-id="'+data[i].id+'"><i class="iconfont icon-edit" ></i> 编辑</a>'

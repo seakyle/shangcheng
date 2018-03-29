@@ -33,10 +33,11 @@
 	<div class="layui-form news_list">
 	  	<table class="layui-table">
 		    <colgroup>
-				<col width="8%">
-				<col width="10%">
+				<col width="5%">
+				<col width="5%">
 				<col width="15%">
 				<col width="10%">
+				<col width="5%">
 				<col width="25%">
 				<col width="15%">
 		    </colgroup>
@@ -45,6 +46,7 @@
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 					<th>课程编号</th>
 					<th>课程名称</th>
+					<th>任课教师</th>
 					<th>课程学分</th>
 					<th>课程描述</th>
 					<th>操作</th>
@@ -55,6 +57,6 @@
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
-	<script type="text/javascript" src="<s:url value='/admin/page/studentInfo/courseList.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/page/teacher/courseList.js' />"></script>
 </body>
 </html>

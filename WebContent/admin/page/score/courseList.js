@@ -7,6 +7,7 @@ layui.config({
 		$ = layui.jquery;
 		$form = $('form');
 	var basePath = $("body",window.parent.document).attr("basePath");
+	
 	LoadData();
 	//加载页面数据
 	function LoadData(){
@@ -15,7 +16,6 @@ layui.config({
 		})
 	}
 	
-
 	//查询
 	$(".search_btn").click(function(){
 		var newArray = [];
@@ -46,7 +46,7 @@ layui.config({
 			type : 2,
 			content : "courseAdd.jsp",
 			success : function(layero, index){
-				layui.layer.tips('点击此处返回课程信息列表', '.layui-layer-setwin .layui-layer-close', {
+				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
 			}
@@ -87,7 +87,7 @@ layui.config({
 	            },2000);
 	        })
 		}else{
-			layer.msg("请选择需要删除的课程");
+			layer.msg("请选择需要删除的文章");
 		}
 	})
 
@@ -117,11 +117,11 @@ layui.config({
 		var _this = $(this);
 		console.log(_this);
 		var index = layui.layer.open({
-			title : "修改课程信息",
+			title : "修改学生信息",
 			type : 2,
 			content : basePath+"/course/edit?id="+_this.attr("data-id"),
 			success : function(layero, index){
-				layui.layer.tips('点击此处返回课程信息列表', '.layui-layer-setwin .layui-layer-close', {
+				layui.layer.tips('点击此处返回学生信息列表', '.layui-layer-setwin .layui-layer-close', {
 					tips: 3
 				});
 			}
@@ -136,7 +136,7 @@ layui.config({
 
 	$("body").on("click",".course_del",function(){  //删除
 		var _this = $(this);
-		layer.confirm('确定删除此课程？',{icon:3, title:'提示信息'},function(index){
+		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
 				"url":basePath+"/course/delete",
 				"data":{"ids":_this.attr("data-id")},

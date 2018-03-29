@@ -5,20 +5,22 @@ import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
 
 import entity.Admin;
+import entity.Stu_token;
 import entity.StudentInfo;
 import entity.Teacher;
 import service.IAdminService;
 import service.IStudentInfoService;
 import service.ITeacherService;
-import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+@ParentPackage("json-default")
 @Namespace(value="/checkLogin")
 public class CheckLoginAction {
 
@@ -46,6 +48,14 @@ public class CheckLoginAction {
 	private Map<String,Object> session = actionContext.getSession(); 
 
 	private String image;
+	
+	private String appUsername;//app中的用户名
+	
+	private String appPassword;//app中的密码
+	
+	private String appToken;//密钥
+	
+	private Map<String, Object> result = new HashMap<>();
 
 	@Autowired
 	private IStudentInfoService studentInfoService;
@@ -63,9 +73,8 @@ public class CheckLoginAction {
 	public String checkLogin() {
 		try {
 			if(admin != null) {
-				String password = new BASE64Encoder().encodeBuffer(admin.getPassword().getBytes());
 				Admin adminResult =  adminService.checkLogin(admin);
-				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), password);
+				StudentInfo studentInfo = studentInfoService.checkLogin(admin.getUsername(), admin.getPassword());
 				Teacher teacher = teacherService.checkLogin(admin.getUsername(), admin.getPassword());
 				if(adminResult == null || !code.equals(getRand())) {
 					if(studentInfo != null && code.equals(getRand())) {
@@ -113,7 +122,8 @@ public class CheckLoginAction {
 		String rand = (String) session.get("rand");
 		return rand;
 	}
-
+	
+	
 	public Admin getAdmin() {
 		return admin;
 	}
@@ -200,5 +210,39 @@ public class CheckLoginAction {
 	public void setTeacherService(ITeacherService teacherService) {
 		this.teacherService = teacherService;
 	}
+
+	public String getAppUsername() {
+		return appUsername;
+	}
+
+	public void setAppUsername(String appUsername) {
+		this.appUsername = appUsername;
+	}
+
+	public String getAppPassword() {
+		return appPassword;
+	}
+
+	public void setAppPassword(String appPassword) {
+		this.appPassword = appPassword;
+	}
+
+	public Map<String, Object> getResult() {
+		return result;
+	}
+
+	public void setResult(Map<String, Object> result) {
+		this.result = result;
+	}
+
+	public String getAppToken() {
+		return appToken;
+	}
+
+	public void setAppToken(String appToken) {
+		this.appToken = appToken;
+	}
+
+	
 
 }

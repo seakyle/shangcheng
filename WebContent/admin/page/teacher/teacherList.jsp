@@ -50,7 +50,7 @@
 					<th>姓名</th>
 					<th>性别</th>
 					<th>所属专业</th>
-					<th>登录密码</th>
+					<th>家庭住址</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>

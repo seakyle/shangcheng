@@ -11,6 +11,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="<s:url value='/admin/css/cropper.min.css' />" media="all" />
+	<link rel="stylesheet" href="<s:url value='/admin/css/ImgCropping.css' />" media="all" />
 	<link rel="stylesheet" href="<s:url value='/admin/layui/css/layui.css' />" media="all" />
 	<link rel="stylesheet" href="<s:url value='/admin/css/user.css' />" media="all" />
 	<style type="text/css">
@@ -97,7 +99,8 @@
 		    </div>
 		</div>
 	</form>
-	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/jquery.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/cropper.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/layui/layui.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/address.js' /> "></script>
 	<script type="text/javascript" src="<s:url value='/admin/page/user/user.js' /> "></script>

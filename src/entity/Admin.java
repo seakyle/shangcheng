@@ -1,9 +1,15 @@
 package entity;
 
+import java.io.IOException;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+import util.MD5Util;
 /*
  * 管理员信息表
  */
@@ -45,12 +51,12 @@ public class Admin {
 		this.id = id;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPassword() throws IOException {
+		return  password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String password) throws IOException{
+		this.password = MD5Util.md5(password);
 	}
 
 	public String getUsername() {

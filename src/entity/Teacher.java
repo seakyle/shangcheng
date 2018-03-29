@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import util.MD5Util;
+/*
+ * 教师信息表
+ */
 @Entity(name="t_teacher")
 public class Teacher {
 	@Id  
@@ -18,7 +22,7 @@ public class Teacher {
 	private int id; //ID
 	
 	@Column(nullable=true)
-	private String tch_id;//学号
+	private String tch_id;//工号
 	
 	private String sex; //性别
 	
@@ -99,11 +103,11 @@ public class Teacher {
 	}
 
 	public String getPassword() {
-		return password;
+		return  password;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = MD5Util.md5(password);
 	}
 
 	public String getType() {

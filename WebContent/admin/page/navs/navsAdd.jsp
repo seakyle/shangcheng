@@ -99,7 +99,7 @@
 		</div>
 	</form>
 	
-	<script type="text/javascript" src="<s:url value='/admin/js/jquery-3.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/admin/js/jquery.min.js' />"></script>
 	<script>
 $.ajax({
 	"url":"<s:url value='/Navs/findAll' />",

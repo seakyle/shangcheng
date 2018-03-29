@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.IOException;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,7 +10,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import org.apache.struts2.json.annotations.JSON;
+
+import com.alibaba.fastjson.annotation.JSONField;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+import util.MD5Util;
 /*
  * 学生信息表
  */
@@ -41,8 +52,12 @@ public class StudentInfo {
 	private String image;//头像
 	
 	@ManyToMany(mappedBy="student",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
-	private Set<Course> course;
+	private Set<Course> course;//课程
 
+	@OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_login")
+	private Stu_token stu_token;//学生登陆口令
+	
 	public int getId() {
 		return id;
 	}
@@ -99,12 +114,12 @@ public class StudentInfo {
 		this.address = address;
 	}
 
-	public String getPassword() {
+	public String getPassword() throws IOException {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String password) throws IOException {
+		this.password = MD5Util.md5(password);
 	}
 
 	public String getType() {
@@ -129,6 +144,14 @@ public class StudentInfo {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	@JSON(serialize=false)
+	public Stu_token getStu_token() {
+		return stu_token;
+	}
+	@JSON(serialize=false)
+	public void setStu_token(Stu_token stu_token) {
+		this.stu_token = stu_token;
 	}
 	
 	

@@ -15,7 +15,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -27,6 +26,7 @@ import entity.Teacher;
 import service.IAdminService;
 import service.IStudentInfoService;
 import service.ITeacherService;
+import util.MD5Util;
 
 @ParentPackage("default")
 @Namespace("/Admin")
